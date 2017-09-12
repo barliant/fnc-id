@@ -1,0 +1,69 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} Form Validation {% endblock title %}
+
+{% block content %}
+  <div class="right_col" role="main">
+    <div class="">
+      <div class="page-title">
+        <div class="title_left">
+          <h3>Add New Document</h3>
+        </div>
+
+        <div class="title_right">
+         
+        </div>
+      </div>
+      <div class="clearfix"></div>
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Add Document</h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+              <form class="form-horizontal form-label-left" novalidate>
+              
+               <div class="item form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Judul <span class="required">*</span>
+                  </label>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input id="occupation" type="text" name="occupation" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
+                  </div>
+                </div>
+				
+        	   <div class="item form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Isi <span class="required">*</span>
+                  </label>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <textarea id="textarea" required="required" name="textarea" class="form-control col-md-7 col-xs-12"></textarea>
+                  </div>
+                </div>
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                  <div class="col-md-6 col-md-offset-3">
+                    <button type="submit" class="btn btn-primary">Cancel</button>
+                    <button id="send" type="submit" class="btn btn-success">Submit</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block javascripts %}
+  {{ block.super }}
+  <!-- validator -->
+  <script src="/static/vendors/validator/validator.js"></script>
+{% endblock javascripts %}
