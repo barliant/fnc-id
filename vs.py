@@ -38,6 +38,7 @@ print "\nDaftar Token : ", dictionary.token2id
 
 
 #mengubah dokumen baru menjadi vector
+new_doc = raw_input("Please ask your query: ")
 new_doc = "Human computer interaction"
 new_vec = dictionary.doc2bow(new_doc.lower().split())
 print "\nNew Vector : ", new_vec #kata "interaction" gaada di dictionary, maka kata tsb diabaikan
