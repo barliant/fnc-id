@@ -23,16 +23,15 @@ for text in texts:
 	for token in text:
 		frequency[token] += 1
 
-texts = [[token for token in text if frequency[token] > 1] for text in texts]
+texts = [[token for token in text if frequency[token] > 0] for text in texts]
 
 from pprint import pprint #pretty printer
 print "document : "
-pprint(texts)
+print(texts)
 
 dictionary = corpora.Dictionary(texts)
 dictionary.save('/tugas-akhir/fnc-id/test.dict') #store dictionary
 print "\nJumlah Token dalam dictionary : ", dictionary
-
 
 print "\nDaftar Token : ", dictionary.token2id
 
