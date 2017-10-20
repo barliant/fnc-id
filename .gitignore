@@ -1,0 +1,6 @@
+# ignore virtualenv folders and files
+bin/
+include/
+lib/
+local/
+pip-selfcheck.json
