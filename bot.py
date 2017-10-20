@@ -2,8 +2,14 @@ from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 from gensim import corpora
+import os
+import ConfigParser
 
-updater = Updater(token='453800080:AAFg-uZIFrn4bzoPdQRnvX6VNG8TdBbkmQk')
+config = ConfigParser.ConfigParser()
+config.read('bot.ini')
+bot_token = config.get('telegram_bot', 'token')
+
+updater = Updater(token=bot_token)
 
 dispatcher = updater.dispatcher
 
