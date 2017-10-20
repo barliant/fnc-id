@@ -6,3 +6,6 @@ local/
 pip-selfcheck.json
 # virtualenv folders in Linux Mint Rosa
 share/
+
+# ignore security-sensitive files
+bot.ini
