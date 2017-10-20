@@ -4,3 +4,5 @@ include/
 lib/
 local/
 pip-selfcheck.json
+# virtualenv folders in Linux Mint Rosa
+share/
