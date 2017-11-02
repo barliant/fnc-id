@@ -1,3 +1,5 @@
+from pprint import pprint
+
 def read_words(words_file):
     table = []
     open_file = open(words_file, 'r') #read file
@@ -8,7 +10,7 @@ def read_words(words_file):
     return table
     open_file.close()
 
-print (read_words('text.txt'))
+pprint (read_words('text.txt'))
 
 
 #other way:
