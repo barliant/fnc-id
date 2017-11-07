@@ -1,0 +1,50 @@
+from gensim import corpora
+import doctolist as doc
+print ("\nMengubah Dokumen menjadi Vector Space Model \n")
+
+documents = doc.read_words('text.txt')
+print(documents)
+#documents= ["Human machine interface for lab abc computer applications",
+ #             "A survey of user opinion of computer system response time",
+  #            "The EPS user interface management system",
+   #           "System and human system engineering testing of EPS",
+    #          "Relation of user perceived response time to error measurement",
+     #         "The generation of random binary unordered trees",
+      #        "The intersection graph of paths in trees",
+       #       "Graph minors IV Widths of trees and well quasi ordering",
+        #      "Graph minors A survey"]
+
+#remove common words and tokenize
+stoplist = set('for a of the and to in'.split())
+texts = [[word.lower() for word in text if word not in stoplist] for text in documents]
+
+#remove words that appear only once
+from collections import defaultdict
+frequency = defaultdict(int)
+for text in texts:
+	for token in text:
+		frequency[token] += 1
+
+texts = [[token for token in text if frequency[token] > 0] for text in texts]
+
+from pprint import pprint #pretty printer
+print ("document : ")
+print(texts)
+
+dictionary = corpora.Dictionary(texts)
+dictionary.save('/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/test.dict') #store dictionary
+print ("\nJumlah Token dalam dictionary : ", dictionary)
+
+print ("\nDaftar Token : ", dictionary.token2id)
+
+
+#mengubah dokumen baru menjadi vector
+new_doc = "Human computer interaction"
+print("\n\nquery: ", new_doc)
+new_vec = dictionary.doc2bow(new_doc.lower().split())
+print ("New Vector : ", new_vec )#kata "interaction" gaada di dictionary, maka kata tsb diabaikan
+
+corpus = [dictionary.doc2bow(text) for text in texts]
+corpora.MmCorpus.serialize('/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/test.mm', corpus) #store to disk
+print ("\nCorpus : ", corpus)
+

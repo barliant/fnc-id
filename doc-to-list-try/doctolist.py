@@ -10,7 +10,7 @@ def read_words(words_file):
     return table
     open_file.close()
 
-pprint (read_words('text.txt'))
+#pprint (read_words('text.txt'))
 
 
 #other way:
