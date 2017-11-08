@@ -1,0 +1,45 @@
+2017-11-08 23:40:36,981 : INFO : loading Dictionary object from /home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/test.dict
+2017-11-08 23:40:36,981 : INFO : loaded /home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/test.dict
+2017-11-08 23:40:36,981 : INFO : loaded corpus index from /home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/test.mm.index
+2017-11-08 23:40:36,981 : INFO : initializing corpus reader from /home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/test.mm
+2017-11-08 23:40:36,982 : INFO : accepted corpus with 9 documents, 37 features, 56 non-zero entries
+Used files generated from first tutorial
+
+2017-11-08 23:40:36,982 : INFO : collecting document frequencies
+2017-11-08 23:40:36,982 : INFO : PROGRESS: processing document #0
+2017-11-08 23:40:36,982 : INFO : calculating IDF weights for 9 documents and 36 features (56 matrix non-zeros)
+
+query:  Human computer interaction
+
+tfidf :  [(0, 0.7071067811865476), (5, 0.7071067811865476)] 
+
+
+2017-11-08 23:40:36,982 : INFO : using symmetric alpha at 0.25
+2017-11-08 23:40:36,982 : INFO : using symmetric eta at 0.02702702702702703
+2017-11-08 23:40:36,983 : INFO : using serial LDA version on this node
+2017-11-08 23:40:36,984 : INFO : running online (single-pass) LDA training, 4 topics, 1 passes over the supplied corpus of 9 documents, updating model once every 9 documents, evaluating perplexity every 9 documents, iterating 50x with a convergence threshold of 0.001000
+2017-11-08 23:40:36,984 : WARNING : too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2017-11-08 23:40:37,005 : INFO : -5.846 per-word bound, 57.5 perplexity estimate based on a held-out corpus of 9 documents with 57 words
+2017-11-08 23:40:37,006 : INFO : PROGRESS: pass 0, at document #9/9
+2017-11-08 23:40:37,023 : INFO : topic #0 (0.250): 0.070*"trees" + 0.042*"system" + 0.042*"survey" + 0.042*"computer" + 0.042*"user" + 0.042*"the" + 0.042*"time" + 0.042*"opinion" + 0.041*"response" + 0.041*"a"
+2017-11-08 23:40:37,023 : INFO : topic #1 (0.250): 0.079*"interface" + 0.079*"the" + 0.049*"graph" + 0.048*"trees" + 0.044*"system" + 0.044*"user" + 0.044*"human" + 0.044*"eps" + 0.044*"abc" + 0.044*"applications"
+2017-11-08 23:40:37,023 : INFO : topic #2 (0.250): 0.028*"the" + 0.028*"graph" + 0.028*"system" + 0.027*"minors" + 0.027*"a" + 0.027*"trees" + 0.027*"user" + 0.027*"survey" + 0.027*"response" + 0.027*"eps"
+2017-11-08 23:40:37,023 : INFO : topic #3 (0.250): 0.085*"system" + 0.048*"graph" + 0.048*"user" + 0.048*"response" + 0.048*"time" + 0.047*"human" + 0.047*"error" + 0.047*"testing" + 0.047*"a" + 0.047*"eps"
+2017-11-08 23:40:37,023 : INFO : topic diff=1.948935, rho=1.000000
+2017-11-08 23:40:37,023 : INFO : topic #0 (0.250): 0.070*"trees" + 0.042*"system" + 0.042*"survey" + 0.042*"computer" + 0.042*"user" + 0.042*"the" + 0.042*"time" + 0.042*"opinion" + 0.041*"response" + 0.041*"a"
+2017-11-08 23:40:37,023 : INFO : topic #1 (0.250): 0.079*"interface" + 0.079*"the" + 0.049*"graph" + 0.048*"trees" + 0.044*"system" + 0.044*"user" + 0.044*"human" + 0.044*"eps" + 0.044*"abc" + 0.044*"applications"
+2017-11-08 23:40:37,023 : INFO : topic #2 (0.250): 0.028*"the" + 0.028*"graph" + 0.028*"system" + 0.027*"minors" + 0.027*"a" + 0.027*"trees" + 0.027*"user" + 0.027*"survey" + 0.027*"response" + 0.027*"eps"
+2017-11-08 23:40:37,024 : INFO : topic #3 (0.250): 0.085*"system" + 0.048*"graph" + 0.048*"user" + 0.048*"response" + 0.048*"time" + 0.047*"human" + 0.047*"error" + 0.047*"testing" + 0.047*"a" + 0.047*"eps"
+
+
+
+[(0, 0.069949150360166704), (1, 0.79038820139475829), (2, 0.069633511655227548), (3, 0.07002913658984744)]
+[(0, 0.79353282476942677), (1, 0.067962300276079954), (2, 0.066668411004011552), (3, 0.071836463950481669)]
+[(0, 0.07602682286548805), (1, 0.77102703584833854), (2, 0.074659766453449433), (3, 0.07828637483272391)]
+[(0, 0.078625758760462433), (1, 0.080348118373785402), (2, 0.078338295090835036), (3, 0.76268782777491717)]
+[(0, 0.071331025358861253), (1, 0.07032596222713712), (2, 0.07015213631556011), (3, 0.78819087609844152)]
+[(0, 0.77454286381097548), (1, 0.076101579943385941), (2, 0.074779942804308788), (3, 0.074575613441329819)]
+[(0, 0.08277290773344953), (1, 0.75538128231196733), (2, 0.080672962276302676), (3, 0.081172847678280535)]
+[(0, 0.79638491052623306), (1, 0.068188714381799131), (2, 0.067250499750848042), (3, 0.06817587534111974)]
+[(0, 0.089809837286597832), (1, 0.085276989714225843), (2, 0.084112034200796826), (3, 0.74080113879837961)]
+
