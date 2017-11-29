@@ -4,7 +4,7 @@ import os.path
 import vs as vec
 from gensim import corpora, models, similarities
 
-#vec.vs()
+vec.vs()
 
 if (os.path.exists("/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict")):
     dictionary = corpora.Dictionary.load('/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict')
@@ -31,8 +31,13 @@ corpus_lda = lda[corpus_tfidf]
 lda.print_topics(2)
 
 print("\n\n")
+i = 1
 for doc in corpus_lda:
-    print(doc)
+    if doc[0][1] > doc [1][1]:
+        print(i, " topic: ", doc[0][0], " value: ", doc[0][1])
+    elif doc[1][1] > doc [0][1]:
+        print(i, " topic: ", doc[1][0], " value: ", doc[1][1])
+    i += 1
 
 
 
