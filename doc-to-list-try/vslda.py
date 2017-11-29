@@ -1,7 +1,10 @@
 import logging, gensim, bz2
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 import os.path
+import vs as vec
 from gensim import corpora, models, similarities
+
+#vec.vs()
 
 if (os.path.exists("/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict")):
     dictionary = corpora.Dictionary.load('/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict')
