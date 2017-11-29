@@ -1,4 +1,4 @@
-from urllib2 import urlopen as uReq
+from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 
 my_url = 'https://news.detik.com/'
@@ -14,7 +14,7 @@ page_soup = soup(page_html, "html.parser")
 #grabs each product
 containers = page_soup.findAll("div",{"class":"desc_nhl"})
 
-filename = "corpusdetik2.csv"
+filename = "corpusdetik28nov.csv"
 f = open(filename, "w")
 
 headers = "title, link, date"

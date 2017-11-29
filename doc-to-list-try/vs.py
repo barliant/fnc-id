@@ -2,7 +2,7 @@ from gensim import corpora
 import doctolist as doc
 print ("\nMengubah Dokumen menjadi Vector Space Model \n")
 
-documents = doc.read_words('text.txt')
+documents = doc.read_words('corpus.csv')
 print(documents)
 #documents= ["Human machine interface for lab abc computer applications",
  #             "A survey of user opinion of computer system response time",
@@ -15,7 +15,7 @@ print(documents)
         #      "Graph minors A survey"]
 
 #remove common words and tokenize
-stoplist = set('for a of the and to in'.split())
+stoplist = set(open('stopwords_id.txt','r').read().split('\n'))
 texts = [[word.lower() for word in text if word not in stoplist] for text in documents]
 
 #remove words that appear only once
@@ -32,19 +32,19 @@ print ("document : ")
 print(texts)
 
 dictionary = corpora.Dictionary(texts)
-dictionary.save('/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/test.dict') #store dictionary
+dictionary.save('/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict') #store dictionary
 print ("\nJumlah Token dalam dictionary : ", dictionary)
 
 print ("\nDaftar Token : ", dictionary.token2id)
 
 
 #mengubah dokumen baru menjadi vector
-new_doc = "Human computer interaction"
+new_doc = "Sebarkan pesan berantai ini, jika tidak maka akan berbahaya"
 print("\n\nquery: ", new_doc)
 new_vec = dictionary.doc2bow(new_doc.lower().split())
 print ("New Vector : ", new_vec )#kata "interaction" gaada di dictionary, maka kata tsb diabaikan
 
 corpus = [dictionary.doc2bow(text) for text in texts]
-corpora.MmCorpus.serialize('/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/test.mm', corpus) #store to disk
+corpora.MmCorpus.serialize('/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.mm', corpus) #store to disk
 print ("\nCorpus : ", corpus)
 
