@@ -1,4 +1,6 @@
 .~lock*.ods#
+.*.swp
+*.swp
 
 # ignore virtualenv folders and files
 bin/
