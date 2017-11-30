@@ -1,3 +1,5 @@
+.~lock*.ods#
+
 # ignore virtualenv folders and files
 bin/
 include/
