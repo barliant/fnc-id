@@ -5,15 +5,7 @@ def vs():
 
     documents = doc.read_words('corpus.csv')
     print(documents)
-    #documents= ["Human machine interface for lab abc computer applications",
-     #             "A survey of user opinion of computer system response time",
-      #            "The EPS user interface management system",
-       #           "System and human system engineering testing of EPS",
-        #          "Relation of user perceived response time to error measurement",
-         #         "The generation of random binary unordered trees",
-          #        "The intersection graph of paths in trees",
-           #       "Graph minors IV Widths of trees and well quasi ordering",
-            #      "Graph minors A survey"]
+    
 
     #remove common words and tokenize
     stoplist = set(open('stopwords_id.txt','r').read().split('\n'))
@@ -33,7 +25,7 @@ def vs():
     print(texts)
 
     dictionary = corpora.Dictionary(texts)
-    dictionary.save('/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict') #store dictionary
+    dictionary.save('/home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict') #store dictionary
     print ("\nJumlah Token dalam dictionary : ", dictionary)
 
     print ("\nDaftar Token : ", dictionary.token2id)
@@ -46,6 +38,6 @@ def vs():
     print ("New Vector : ", new_vec )#kata "interaction" gaada di dictionary, maka kata tsb diabaikan
 
     corpus = [dictionary.doc2bow(text) for text in texts]
-    corpora.MmCorpus.serialize('/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.mm', corpus) #store to disk
+    corpora.MmCorpus.serialize('/home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.mm', corpus) #store to disk
     print ("\nCorpus : ", corpus)
 
