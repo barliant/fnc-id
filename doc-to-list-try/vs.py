@@ -1,10 +1,10 @@
 def vs():
     from gensim import corpora
     import doctolist as doc
-    print ("\nMengubah Dokumen menjadi Vector Space Model \n")
+    #print ("\nMengubah Dokumen menjadi Vector Space Model \n")
 
     documents = doc.read_words('corpus.csv')
-    print(documents)
+    #print(documents)
     
 
     #remove common words and tokenize
@@ -21,23 +21,23 @@ def vs():
     texts = [[token for token in text if frequency[token] > 0] for text in texts]
 
     from pprint import pprint #pretty printer
-    print ("document : ")
-    print(texts)
+    #print ("document : ")
+    #print(texts)
 
     dictionary = corpora.Dictionary(texts)
     dictionary.save('/home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict') #store dictionary
-    print ("\nJumlah Token dalam dictionary : ", dictionary)
+   # print ("\nJumlah Token dalam dictionary : ", dictionary)
 
-    print ("\nDaftar Token : ", dictionary.token2id)
+#    print ("\nDaftar Token : ", dictionary.token2id)
 
 
     #mengubah dokumen baru menjadi vector
     new_doc = "Sebarkan pesan berantai ini, jika tidak maka akan berbahaya"
-    print("\n\nquery: ", new_doc)
+ #   print("\n\nquery: ", new_doc)
     new_vec = dictionary.doc2bow(new_doc.lower().split())
-    print ("New Vector : ", new_vec )#kata "interaction" gaada di dictionary, maka kata tsb diabaikan
+  #  print ("New Vector : ", new_vec )#kata "interaction" gaada di dictionary, maka kata tsb diabaikan
 
     corpus = [dictionary.doc2bow(text) for text in texts]
     corpora.MmCorpus.serialize('/home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.mm', corpus) #store to disk
-    print ("\nCorpus : ", corpus)
+   # print ("\nCorpus : ", corpus)
 

@@ -15,15 +15,15 @@ else:
 
 tfidf = models.TfidfModel(corpus)
 new_doc = "Sebarkan pesan berantai ini, jika tidak maka nyawa anda akan terancam"
-print("\nquery: ", new_doc)
+#print("\nquery: ", new_doc)
 query = dictionary.doc2bow(new_doc.lower().split())
-print("\ntfidf : ", tfidf[query], "\n\n")
+#print("\ntfidf : ", tfidf[query], "\n\n")
 
 #transformation to whole corpus
 corpus_tfidf = tfidf[corpus]
-print("\ntfidf whole corpus: \n")
-for doc in corpus_tfidf:
-   print(doc)
+#print("\ntfidf whole corpus: \n")
+#for doc in corpus_tfidf:
+#   print(doc)
 
 #LDA Proccess
 lda = models.LdaModel(corpus, id2word=dictionary, num_topics=2)
