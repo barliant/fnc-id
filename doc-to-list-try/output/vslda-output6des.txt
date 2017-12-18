@@ -1,0 +1,66 @@
+2017-12-07 01:08:51,192 : INFO : adding document #0 to Dictionary(0 unique tokens: [])
+2017-12-07 01:08:51,195 : INFO : built Dictionary(1929 unique tokens: ["'terungkapnya", 'jaringan', 'saracen', 'pemberitaan', 'menyedot']...) from 32 documents (total 3310 corpus positions)
+2017-12-07 01:08:51,196 : INFO : saving Dictionary object under /home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict, separately None
+2017-12-07 01:08:51,197 : INFO : saved /home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict
+2017-12-07 01:08:51,201 : INFO : storing corpus in Matrix Market format to /home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.mm
+2017-12-07 01:08:51,201 : INFO : saving sparse matrix to /home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.mm
+2017-12-07 01:08:51,201 : INFO : PROGRESS: saving document #0
+2017-12-07 01:08:51,207 : INFO : saved 32x1929 matrix, density=4.267% (2634/61728)
+2017-12-07 01:08:51,207 : INFO : saving MmCorpus index to /home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.mm.index
+2017-12-07 01:08:51,207 : INFO : loading Dictionary object from /home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict
+2017-12-07 01:08:51,208 : INFO : loaded /home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict
+2017-12-07 01:08:51,208 : INFO : loaded corpus index from /home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.mm.index
+2017-12-07 01:08:51,208 : INFO : initializing corpus reader from /home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.mm
+2017-12-07 01:08:51,209 : INFO : accepted corpus with 32 documents, 1929 features, 2634 non-zero entries
+Used files generated from first tutorial
+
+2017-12-07 01:08:51,209 : INFO : collecting document frequencies
+2017-12-07 01:08:51,209 : INFO : PROGRESS: processing document #0
+2017-12-07 01:08:51,218 : INFO : calculating IDF weights for 32 documents and 1928 features (2634 matrix non-zeros)
+2017-12-07 01:08:51,219 : INFO : using symmetric alpha at 0.5
+2017-12-07 01:08:51,219 : INFO : using symmetric eta at 0.0005184033177812338
+2017-12-07 01:08:51,220 : INFO : using serial LDA version on this node
+2017-12-07 01:08:51,275 : INFO : running online (single-pass) LDA training, 2 topics, 1 passes over the supplied corpus of 32 documents, updating model once every 32 documents, evaluating perplexity every 32 documents, iterating 50x with a convergence threshold of 0.001000
+2017-12-07 01:08:51,275 : WARNING : too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2017-12-07 01:08:51,563 : INFO : -8.282 per-word bound, 311.2 perplexity estimate based on a held-out corpus of 32 documents with 3310 words
+2017-12-07 01:08:51,563 : INFO : PROGRESS: pass 0, at document #32/32
+2017-12-07 01:08:51,728 : INFO : topic #0 (0.500): 0.006*"pesan" + 0.005*"jakarta" + 0.004*"beredar" + 0.003*"dki" + 0.003*"berantai" + 0.003*"online" + 0.003*"kota" + 0.003*"jalan" + 0.003*"motor" + 0.003*"warga"
+2017-12-07 01:08:51,728 : INFO : topic #1 (0.500): 0.005*"pesan" + 0.004*"warga" + 0.004*"yg" + 0.004*"foto" + 0.003*"beredar" + 0.003*"'" + 0.003*"jakarta" + 0.003*"facebook" + 0.003*"media" + 0.003*"informasi"
+2017-12-07 01:08:51,729 : INFO : topic diff=0.515338, rho=1.000000
+2017-12-07 01:08:51,729 : INFO : topic #0 (0.500): 0.006*"pesan" + 0.005*"jakarta" + 0.004*"beredar" + 0.003*"dki" + 0.003*"berantai" + 0.003*"online" + 0.003*"kota" + 0.003*"jalan" + 0.003*"motor" + 0.003*"warga"
+2017-12-07 01:08:51,729 : INFO : topic #1 (0.500): 0.005*"pesan" + 0.004*"warga" + 0.004*"yg" + 0.004*"foto" + 0.003*"beredar" + 0.003*"'" + 0.003*"jakarta" + 0.003*"facebook" + 0.003*"media" + 0.003*"informasi"
+
+
+
+1  topic:  0  value:  0.918626525988
+2  topic:  1  value:  0.92428804516
+3  topic:  0  value:  0.912360765762
+4  topic:  1  value:  0.900657376283
+5  topic:  1  value:  0.910696624722
+6  topic:  1  value:  0.594433253569
+7  topic:  0  value:  0.944742055616
+8  topic:  1  value:  0.932172143618
+9  topic:  1  value:  0.908934537995
+10  topic:  1  value:  0.756758412743
+11  topic:  0  value:  0.937309841775
+12  topic:  1  value:  0.934757143363
+13  topic:  0  value:  0.926105611249
+14  topic:  1  value:  0.881240003399
+15  topic:  0  value:  0.678480609958
+16  topic:  0  value:  0.926885741984
+17  topic:  0  value:  0.891879500011
+18  topic:  0  value:  0.875009264583
+19  topic:  1  value:  0.915720475927
+20  topic:  0  value:  0.948001172221
+21  topic:  0  value:  0.94651955615
+22  topic:  0  value:  0.924861228367
+23  topic:  1  value:  0.935753055405
+24  topic:  1  value:  0.949877350248
+25  topic:  1  value:  0.920564982814
+26  topic:  0  value:  0.919853542201
+27  topic:  0  value:  0.553935343704
+28  topic:  0  value:  0.911946750889
+29  topic:  1  value:  0.915309415018
+30  topic:  1  value:  0.938733522218
+31  topic:  1  value:  0.840121344191
+32  topic:  0  value:  0.926432861349
