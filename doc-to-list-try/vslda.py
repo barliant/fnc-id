@@ -6,9 +6,9 @@ from gensim import corpora, models, similarities
 
 vec.vs()
 
-if (os.path.exists("/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict")):
-    dictionary = corpora.Dictionary.load('/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict')
-    corpus = corpora.MmCorpus('/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.mm')
+if (os.path.exists("/home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict")):
+    dictionary = corpora.Dictionary.load('/home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict')
+    corpus = corpora.MmCorpus('/home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.mm')
     print("Used files generated from first tutorial\n")
 else:
     print("Please run first tutorial to generate data set\n")
