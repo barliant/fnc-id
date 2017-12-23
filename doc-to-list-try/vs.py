@@ -25,7 +25,7 @@ def vs():
     #print(texts)
 
     dictionary = corpora.Dictionary(texts)
-    dictionary.save('/home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict') #store dictionary
+    dictionary.save('/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.dict') #store dictionary
    # print ("\nJumlah Token dalam dictionary : ", dictionary)
 
 #    print ("\nDaftar Token : ", dictionary.token2id)
@@ -38,6 +38,6 @@ def vs():
   #  print ("New Vector : ", new_vec )#kata "interaction" gaada di dictionary, maka kata tsb diabaikan
 
     corpus = [dictionary.doc2bow(text) for text in texts]
-    corpora.MmCorpus.serialize('/home/ajengdhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.mm', corpus) #store to disk
+    corpora.MmCorpus.serialize('/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.mm', corpus) #store to disk
    # print ("\nCorpus : ", corpus)
 

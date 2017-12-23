@@ -14,7 +14,7 @@ page_soup = soup(page_html, "html.parser")
 #grabs each product
 containers = page_soup.findAll("div",{"class":"desc_nhl"})
 
-filename = "corpusdetik18dec.csv"
+filename = "corpusdetik23dec.csv"
 f = open(filename, "w")
 
 headers = "title, link, date"
