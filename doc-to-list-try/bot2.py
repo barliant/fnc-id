@@ -23,7 +23,7 @@ def corpus(bot, update):
    	print(update.message.chat_id)
 	new_doc = update.message.text
 	filename = "corpuz.csv"
-    	f = open(filename, "w")
+    	f = open(filename, "a")
     	f.write(new_doc.replace(",", ";") + "\n")
 	f.close()
 	
