@@ -39,5 +39,5 @@ def vs():
 
     corpus = [dictionary.doc2bow(text) for text in texts]
     corpora.MmCorpus.serialize('/home/adhanindita/tugas-akhir/fnc-id/doc-to-list-try/corpus.mm', corpus) #store to disk
-   # print ("\nCorpus : ", corpus)
+    print ("\nCorpus : ", corpus)
 

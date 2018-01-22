@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from hoax.models import Hoax
+from django.db import connection
+from gensim import corpora
 
 # Create your views here.
 def index(request):
@@ -15,23 +17,34 @@ def input(request):
 	print(request.POST)
 	corpus = Hoax(corpus=request.POST['corpus'], label = None)
 	corpus.save()
-	return redirect('/')
+	vslda()
+	return redirect('/viewcorpus')
 
 def viewcorpus(request):
 	corpora = Hoax.objects.all()
 	context = {'corpora' : corpora}
 	return render(request, 'hoax/viewcorpus.html', context)
 
+def delete(request, id):
+	corpus = Hoax.objects.get(id=id)
+	corpus.delete()
+	return redirect('/viewcorpus') 
+
+
+
+
 #blm selesai
 def vs():
-    from gensim import corpora
 
-    sql =  Hoax.objects.raw('SELECT id, corpus FROM hoax_hoax')
-    dbrows = sql.fetchall()
+    cursor = connection.cursor()
+    cursor.execute("SELECT corpus FROM hoax_hoax")
+    row = cursor.fetchall()
 
     documents = []
-    for i in dbrows:
-    	documents.append(i)
+    
+    for i in row:
+    	words_list = list(i) #split by any whitespaces, then return as array
+    	documents.append(words_list)
      
     #remove common words and tokenize
     stoplist = set(open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/lda/stopwords_id.txt','r').read().split('\n'))
@@ -74,7 +87,7 @@ def vslda():
 	import os.path
 	from gensim import corpora, models, similarities
 
-	vec.vs()
+	vs() #call fungsi vs()
 
 	if (os.path.exists("/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/lda/corpus.dict")):
 	    dictionary = corpora.Dictionary.load('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/lda/corpus.dict')
@@ -102,12 +115,31 @@ def vslda():
 
 	print("\n\n")
 	i = 1
+	cursor = connection.cursor()
+	
 	for doc in corpus_lda:
 	    if doc[0][1] > doc [1][1]:
-	        print(i, " topic: ", doc[0][0], " value: ", doc[0][1])
+	       	print(i, " topic: ", doc[0][0], " value: ", doc[0][1])
+	        for corpus_id in Hoax.objects.raw('SELECT id FROM hoax_hoax'):
+	        	print(corpus_id.id)
+	        	ids = corpus_id.id
+	        	cursor.execute("UPDATE hoax_hoax SET label = %s WHERE id = %s" % (doc[0][0], ids))
+	        	#hoax = Hoax.objects.get(id = int(corpus_id))
+	        	#hoax.label = doc[0][0]
+	        	#hoax.save()
+
 	    elif doc[1][1] > doc [0][1]:
 	        print(i, " topic: ", doc[1][0], " value: ", doc[1][1])
+	        for corpus_id in Hoax.objects.raw('SELECT id FROM hoax_hoax'):
+	        	print(corpus_id.id)	  
+	        	ids = corpus_id.id
+	        	cursor.execute("UPDATE hoax_hoax SET label = %s WHERE id = %s" % (doc[1][0], ids))
+	        	#hoax = Hoax.objects.get(id = int(corpus_id))
+	        	#hoax.label = doc[1][0]
+	        	#hoax.save()
 	    i += 1
+
+	
 
 
 
