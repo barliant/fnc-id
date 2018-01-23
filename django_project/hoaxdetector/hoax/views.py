@@ -37,7 +37,7 @@ def delete(request, id):
 def vs():
 
     cursor = connection.cursor()
-    cursor.execute("SELECT corpus FROM hoax_hoax")
+    cursor.execute("SELECT corpus FROM hoax_hoax ORDER BY id ASC")
     row = cursor.fetchall()
 
     documents = []
@@ -116,28 +116,32 @@ def vslda():
 	print("\n\n")
 	i = 1
 	cursor = connection.cursor()
-	
+	temp = []
 	for doc in corpus_lda:
 	    if doc[0][1] > doc [1][1]:
 	       	print(i, " topic: ", doc[0][0], " value: ", doc[0][1])
-	        for corpus_id in Hoax.objects.raw('SELECT id FROM hoax_hoax'):
-	        	print(corpus_id.id)
-	        	ids = corpus_id.id
-	        	cursor.execute("UPDATE hoax_hoax SET label = %s WHERE id = %s" % (doc[0][0], ids))
-	        	#hoax = Hoax.objects.get(id = int(corpus_id))
-	        	#hoax.label = doc[0][0]
-	        	#hoax.save()
+	       	temp.append(doc[0][0])
+	       	#cursor.execute("UPDATE hoax_hoax SET label = %s WHERE id IN (SELECT ID FROM hoax_hoax)" % (doc[0][0]))
+	        #hoax = Hoax.objects.get(id = int(corpus_id))
+	        #hoax.label = doc[0][0]
+	        #hoax.save()
 
 	    elif doc[1][1] > doc [0][1]:
 	        print(i, " topic: ", doc[1][0], " value: ", doc[1][1])
-	        for corpus_id in Hoax.objects.raw('SELECT id FROM hoax_hoax'):
-	        	print(corpus_id.id)	  
-	        	ids = corpus_id.id
-	        	cursor.execute("UPDATE hoax_hoax SET label = %s WHERE id = %s" % (doc[1][0], ids))
-	        	#hoax = Hoax.objects.get(id = int(corpus_id))
-	        	#hoax.label = doc[1][0]
-	        	#hoax.save()
+	        temp.append(doc[1][0])
+	        #cursor.execute("UPDATE hoax_hoax SET label = %s WHERE id IN (SELECT ID FROM hoax_hoax)" % (doc[1][0]))
+	        #hoax = Hoax.objects.get(id = int(corpus_id))
+	        #hoax.label = doc[1][0]
+	        #hoax.save()
 	    i += 1
+
+	item = iter(temp)
+	for corpus_id in Hoax.objects.raw('SELECT id FROM hoax_hoax ORDER BY id ASC'):
+		if len(temp) != 0:
+			i = next(item)
+			print(i)
+			cursor.execute("UPDATE hoax_hoax SET label = %s WHERE id = %s" % (i, corpus_id.id))
+		 	
 
 	
 
