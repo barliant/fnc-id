@@ -21,7 +21,7 @@ def input(request):
 	return redirect('/viewcorpus')
 
 def viewcorpus(request):
-	corpora = Hoax.objects.all()
+	corpora = Hoax.objects.all().order_by('id')
 	context = {'corpora' : corpora}
 	return render(request, 'hoax/viewcorpus.html', context)
 
