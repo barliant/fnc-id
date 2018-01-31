@@ -2,17 +2,25 @@ from django.shortcuts import render, redirect
 from hoax.models import Hoax
 from django.db import connection
 from gensim import corpora
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required(login_url="/accounts/login/")
 def index(request):
-	return render(request, 'hoax/index.html')
+	return render(request, 'hoax/home.html')
 
+
+@login_required(login_url="/accounts/login/")
 def checkhoax(request):
 	return render(request, 'hoax/checkhoax.html')
 
+
+@login_required(login_url="/accounts/login/")
 def addcorpus(request):
 	return render(request, 'hoax/addcorpus.html')
 
+
+@login_required(login_url="/accounts/login/")
 def input(request):
 	print(request.POST)
 	corpus = Hoax(corpus=request.POST['corpus'], label = None)
@@ -20,11 +28,15 @@ def input(request):
 	vslda()
 	return redirect('/viewcorpus')
 
+
+@login_required(login_url="/accounts/login/")
 def viewcorpus(request):
 	corpora = Hoax.objects.all().order_by('id')
 	context = {'corpora' : corpora}
 	return render(request, 'hoax/viewcorpus.html', context)
 
+
+@login_required(login_url="/accounts/login/")
 def delete(request, id):
 	corpus = Hoax.objects.get(id=id)
 	corpus.delete()

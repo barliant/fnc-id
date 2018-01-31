@@ -1,0 +1,60 @@
+{% extends 'adminlte/base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+  {% block title %}HoaxDetector{% endblock %}
+  </title>
+</head>
+<body>
+{% block content %}
+   <!-- Content Wrapper. Contains page content -->
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Register Account
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li></i>Accounts</a></li>
+        <li class="active">Register Account</li>
+      </ol>
+    </section>
+
+    	<!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">           
+          <!-- general form elements disabled -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Add Corpus</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+
+              <form role="form" action = "/accounts/signup/" method="post">  
+              {% csrf_token %}   
+                <div class="form-group">
+                  <label>Register Account</label>
+                 	{{ form }}
+                </div>
+                <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Register</button>
+              </div>
+
+              </form>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+{% endblock %}
+</body>
+</html>

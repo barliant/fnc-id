@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
 	'hoax',
+    'accounts',
+    'mainapp',
     'django_adminlte',
     'django_adminlte_theme',
     'django.contrib.admin',
@@ -125,3 +127,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGOUT_URL = '/accounts/logout/'
