@@ -1,6 +1,7 @@
 .~lock*.ods#
 .*.swp
 *.swp
+*.pyc
 
 # ignore virtualenv folders and files
 bin/
