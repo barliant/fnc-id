@@ -1,4 +1,4 @@
--Doc-to-list-try-
+= Doc-to-list-try =
 
 Untuk membaca teks dari sebuah file lalu diubah dalam bentuk array/list:
 
