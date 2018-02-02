@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
 	url(r'^$', views.index),
+	url(r'^home$', views.home),
 	url(r'^checkhoax$', views.checkhoax),
 	url(r'^addcorpus$', views.addcorpus),
 	url(r'^addcorpus/input$', views.input),

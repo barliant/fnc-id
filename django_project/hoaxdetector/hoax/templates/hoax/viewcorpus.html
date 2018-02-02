@@ -16,7 +16,7 @@
         Corpus Table
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="/viewcorpus">view corpus</a></li>
         <li class="active">Corpus Table</li>
       </ol>
@@ -60,14 +60,29 @@
               </table>
             </div>
             <!-- /.box-body -->
+
             <div class="box-footer clearfix">
-              <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="#">&laquo;</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">&raquo;</a></li>
-              </ul>
+              {% if corpora.has_other_pages %}
+                <ul class="pagination pagination-sm no-margin pull-right">
+                {% if corpora.has_previous %}
+                  <li><a href="?page={{ corpora.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in corpora.paginator.page_range %}
+                  {% if corpora.number == i %}
+                   <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                  {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if corpora.has_next %}
+                  <li><a href="?page={{ corpora.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+                </ul>
+              {% endif %}
             </div>
           </div>
           <!-- /.box -->

@@ -11,7 +11,7 @@ def signup_view(request):
 		form = UserCreationForm(request.POST) #buat baca ada data yg dientry di form atau tidak
 		if form.is_valid():
 			form.save() 
-			return redirect('/')
+			return redirect('/home')
 	else:
 		form = UserCreationForm()
 
@@ -25,7 +25,7 @@ def login_view(request):
 			#log in function
 			user = form.get_user() #get the user data from variable form
 			login(request, user) #log the user in
-			return redirect('/')
+			return redirect('/home')
 
 	else:
 		form = AuthenticationForm()

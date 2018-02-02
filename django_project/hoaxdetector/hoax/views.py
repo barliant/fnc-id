@@ -3,10 +3,16 @@ from hoax.models import Hoax
 from django.db import connection
 from gensim import corpora
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 # Create your views here.
-@login_required(login_url="/accounts/login/")
 def index(request):
+	return redirect('/main')
+
+
+@login_required(login_url="/accounts/login/")
+def home(request):
 	return render(request, 'hoax/home.html')
 
 
@@ -32,8 +38,17 @@ def input(request):
 @login_required(login_url="/accounts/login/")
 def viewcorpus(request):
 	corpora = Hoax.objects.all().order_by('id')
+	page = request.GET.get('page', 1)
+	paginator = Paginator(corpora, 7)
+	try:
+		corpora = paginator.page(page)
+	except PageNotAnInteger:
+		corpora = paginator.page(1)
+	except EmptyPage:
+		corpora = paginator.page(paginator.num_pages)
+
 	context = {'corpora' : corpora}
-	return render(request, 'hoax/viewcorpus.html', context)
+	return render(request, 'hoax/viewcorpus.html', {'corpora' : corpora})
 
 
 @login_required(login_url="/accounts/login/")
@@ -44,8 +59,6 @@ def delete(request, id):
 
 
 
-
-#blm selesai
 def vs():
 
     cursor = connection.cursor()
@@ -92,7 +105,7 @@ def vs():
     corpora.MmCorpus.serialize('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/lda/corpus.mm', corpus) #store to disk
    # print ("\nCorpus : ", corpus)
 
-#blm selesai
+
 def vslda():
 	import logging, gensim, bz2
 	logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
