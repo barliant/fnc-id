@@ -4,7 +4,8 @@ from django.db import connection
 from gensim import corpora
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+import csv
+from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
@@ -57,6 +58,32 @@ def delete(request, id):
 	corpus.delete()
 	return redirect('/viewcorpus') 
 
+
+@login_required(login_url="/accounts/login/")
+def detail(request, id):
+	corpora = Hoax.objects.get(id=id)
+	context = {'corpora' : corpora}
+	return render(request, 'hoax/detailcorpus.html', context)
+
+
+@login_required(login_url="/accounts/login/")
+def train(request):
+	vslda()
+	return redirect('/viewcorpus') 
+
+
+@login_required(login_url="/accounts/login/")
+def export(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="corpusexport.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['ID', 'Corpus', 'Label', 'Created_at'])
+   
+    for row in Hoax.objects.raw('SELECT * FROM hoax_hoax ORDER BY id ASC'):
+    	writer.writerow([row.id, row.corpus, row.label, row.created_at]) 
+    return response
 
 
 def vs():
@@ -122,10 +149,7 @@ def vslda():
 	    print("Please run first tutorial to generate data set\n")
 
 	tfidf = models.TfidfModel(corpus)
-	new_doc = "Sebarkan pesan berantai ini, jika tidak maka nyawa anda akan terancam"
-	#print("\nquery: ", new_doc)
-	query = dictionary.doc2bow(new_doc.lower().split())
-	#print("\ntfidf : ", tfidf[query], "\n\n")
+	
 
 	#transformation to whole corpus
 	corpus_tfidf = tfidf[corpus]
