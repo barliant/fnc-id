@@ -1,0 +1,14 @@
+{% extends "adminlte/login.html" %}
+
+
+{% block title %}HoaxDetector{% endblock %}
+
+{% block logo_text %}<b>Hoax</b>Detector{% endblock %}
+{% block form %}
+    <form action="{% url 'accounts:login' %}" method="post">
+        {% csrf_token %}
+        {{ form  }}
+    </form>
+{% endblock %}
+{% block login_form_links %}<a href="/main/">No Account</a>{% endblock %}
+

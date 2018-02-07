@@ -3,7 +3,7 @@
 <html>
 <head>
   <title>
-  {% block title %}My App{% endblock %}
+  {% block title %}HoaxDetector{% endblock %}
   </title>
 </head>
 <body>
@@ -16,7 +16,7 @@
         Corpus Table
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="/viewcorpus">view corpus</a></li>
         <li class="active">Corpus Table</li>
       </ol>
@@ -32,10 +32,12 @@
 
               <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
+                  
                   <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    <a href="/train" type="button" class="btn btn-block btn-info">Train Data</a>
+                  </div>
+                  <div class="input-group-btn">
+                    <a href="/export" type="button" class="btn btn-block btn-success">Export Data</a>
                   </div>
                 </div>
               </div>
@@ -51,23 +53,46 @@
                 </tr>
                 {% for corpus in corpora %}
                   <tr>
-                    <td>{{ corpus.corpus }}</td>
+                    <td style="max-width: 307px; 
+                    overflow: hidden; 
+                    text-overflow: ellipsis;
+                    white-space: nowrap; 
+                    display: block; 
+                    font-weight: bold;">{{ corpus.corpus }}</td>
                     <td>{{ corpus.label }}</td>
                     <td>{{ corpus.created_at }}</td>
-                    <td><a href="/delete/{{ corpus.id }}">Delete </a></td>
+                    <td>
+                      <a href="/delete/{{ corpus.id }}">Delete </a> | 
+                      <a href="/detail/{{ corpus.id }}"> Detail </a>
+                    </td>
                   </tr>
                 {% endfor %}
               </table>
             </div>
             <!-- /.box-body -->
+
             <div class="box-footer clearfix">
-              <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="#">&laquo;</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">&raquo;</a></li>
-              </ul>
+              {% if corpora.has_other_pages %}
+                <ul class="pagination pagination-sm no-margin pull-right">
+                {% if corpora.has_previous %}
+                  <li><a href="?page={{ corpora.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in corpora.paginator.page_range %}
+                  {% if corpora.number == i %}
+                   <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                  {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if corpora.has_next %}
+                  <li><a href="?page={{ corpora.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+                </ul>
+              {% endif %}
             </div>
           </div>
           <!-- /.box -->
