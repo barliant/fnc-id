@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from hoax.models import Hoax
+from hoax.models import Hoax_two as Hoax
 from django.db import connection
 from gensim import corpora
 from django.contrib.auth.decorators import login_required
@@ -87,49 +87,54 @@ def export(request):
 
 
 def vs():
+	from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 
-    cursor = connection.cursor()
-    cursor.execute("SELECT corpus FROM hoax_hoax ORDER BY id ASC")
-    row = cursor.fetchall()
+	# create stemmer
+	factory = StemmerFactory()
+	stemmer = factory.create_stemmer()
 
-    documents = []
-    
-    for i in row:
-    	words_list = list(i) #split by any whitespaces, then return as array
-    	documents.append(words_list)
-     
+	cursor = connection.cursor()
+	cursor.execute("SELECT corpus FROM hoax_hoax ORDER BY id ASC")
+	row = cursor.fetchall()
+
+	documents = []
+
+	for i in row:
+		words_list = list(i) #split by any whitespaces, then return as array
+		documents.append(words_list)
+    #from pprint import pprint
+    #pprint(documents)
+
     #remove common words and tokenize
-    stoplist = set(open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/lda/stopwords_id.txt','r').read().split('\n'))
-    texts = [[word.lower() for word in text if word not in stoplist] for text in documents]
+	stoplist = set(open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/lda/stopwords_id.txt','r').read().split('\n'))
+	stop_text = [[word.lower() for word in text if word not in stoplist] for text in documents]
+	#texts =  [stemmer.stem(txt) for txt in stop_text]
 
     #remove words that appear only once
-    from collections import defaultdict
-    frequency = defaultdict(int)
-    for text in texts:
-	    for token in text:
-		    frequency[token] += 1
+	from collections import defaultdict
+	frequency = defaultdict(int)
+	for text in texts:
+		for token in text:
+			frequency[token] += 1
 
-    texts = [[token for token in text if frequency[token] > 0] for text in texts]
+	texts = [[token for token in text if frequency[token] > 0] for text in texts]
 
-    from pprint import pprint #pretty printer
-    #print ("document : ")
-    #print(texts)
-
-    dictionary = corpora.Dictionary(texts)
-    dictionary.save('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/lda/corpus.dict') #store dictionary
+    
+	dictionary = corpora.Dictionary(texts)
+	dictionary.save('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/lda/corpus.dict') #store dictionary
    # print ("\nJumlah Token dalam dictionary : ", dictionary)
 
 #    print ("\nDaftar Token : ", dictionary.token2id)
 
 
     #mengubah dokumen baru menjadi vector
-    new_doc = "Sebarkan pesan berantai ini, jika tidak maka akan berbahaya"
+	new_doc = "Sebarkan pesan berantai ini, jika tidak maka akan berbahaya"
  #   print("\n\nquery: ", new_doc)
-    new_vec = dictionary.doc2bow(new_doc.lower().split())
+	new_vec = dictionary.doc2bow(new_doc.lower().split())
   #  print ("New Vector : ", new_vec )#kata "interaction" gaada di dictionary, maka kata tsb diabaikan
 
-    corpus = [dictionary.doc2bow(text) for text in texts]
-    corpora.MmCorpus.serialize('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/lda/corpus.mm', corpus) #store to disk
+	corpus = [dictionary.doc2bow(text) for text in texts]
+	corpora.MmCorpus.serialize('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/lda/corpus.mm', corpus) #store to disk
    # print ("\nCorpus : ", corpus)
 
 

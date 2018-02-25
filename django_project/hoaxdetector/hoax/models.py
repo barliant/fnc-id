@@ -6,3 +6,9 @@ class Hoax(models.Model):
 	label = models.IntegerField(null=True)
 	created_at = models.DateTimeField(auto_now_add = True) #auto now pada saat add perdana saja
 	updated_at = models.DateTimeField(auto_now = True)
+
+class Hoax_two(models.Model):
+	corpus = models.TextField()
+	label = models.IntegerField(null=True)
+	created_at = models.DateTimeField(auto_now_add = True) #auto now pada saat add perdana saja
+	updated_at = models.DateTimeField(auto_now = True)
