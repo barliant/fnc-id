@@ -91,12 +91,13 @@ def vs():
     cursor = connection.cursor()
     cursor.execute("SELECT corpus FROM hoax_hoax ORDER BY id ASC")
     row = cursor.fetchall()
-
     documents = []
-    
+   
     for i in row:
     	words_list = list(i) #split by any whitespaces, then return as array
-    	documents.append(words_list)
+    	for j in words_list:
+    		kata = j.split()
+    		documents.append(kata)
      
     #remove common words and tokenize
     stoplist = set(open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/lda/stopwords_id.txt','r').read().split('\n'))
@@ -112,8 +113,8 @@ def vs():
     texts = [[token for token in text if frequency[token] > 0] for text in texts]
 
     from pprint import pprint #pretty printer
-    #print ("document : ")
-    #print(texts)
+    pprint ("document : ")
+    pprint(texts)
 
     dictionary = corpora.Dictionary(texts)
     dictionary.save('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/lda/corpus.dict') #store dictionary
