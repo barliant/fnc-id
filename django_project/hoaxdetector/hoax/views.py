@@ -108,7 +108,12 @@ def vs():
     #remove common words and tokenize
 	stoplist = set(open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/lda/stopwords_id.txt','r').read().split('\n'))
 	stop_text = [[word.lower() for word in text if word not in stoplist] for text in documents]
-	#texts =  [stemmer.stem(txt) for txt in stop_text]
+#	texts =  [stemmer.stem(txt) for txt in stop_text]
+	texts = []
+	for txt in stop_text:
+		for kata in txt:
+			text = stemmer.stem(kata)
+			texts.append(text)
 
     #remove words that appear only once
 	from collections import defaultdict
