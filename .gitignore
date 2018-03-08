@@ -1,4 +1,5 @@
 .~lock*.ods#
+.*.un~
 .*.swp
 *.swp
 *.pyc
