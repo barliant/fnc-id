@@ -2,8 +2,11 @@ import psycopg2
 import sys
 import gensim, bz2
 import os.path
+import numpy as np
 from gensim import corpora, models, similarities
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+import logging
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 class Hoaxdtc(object):
 	def __init__(self):
@@ -21,7 +24,7 @@ class Hoaxdtc(object):
 	def token(self):
 		print("Tokenizing Only")
 		cursor = self.conn.cursor()
-		cursor.execute("SELECT corpus FROM tbhoax ORDER BY id ASC")
+		cursor.execute("SELECT corpus FROM tbhoax2 ORDER BY id ASC")
 		row = cursor.fetchall()
 		documents = []
 		
@@ -53,6 +56,7 @@ class Hoaxdtc(object):
 		dictionary = corpora.Dictionary.load('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/lda/corpus2.dict')
 		corpus = corpora.MmCorpus('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/lda/corpus2.mm')
 
+
 		tfidf = models.TfidfModel(corpus)
 		
 
@@ -80,20 +84,20 @@ class Hoaxdtc(object):
 		    i += 1
 
 		item = iter(temp)
-		cursor.execute('SELECT id FROM tbhoax ORDER BY id ASC')
+		cursor.execute('SELECT id FROM tbhoax2 ORDER BY id ASC')
 		data = cursor.fetchall()
 		for corpus_id in data:
 			if len(temp) != 0:
 				i = next(item)
 				#print(i)
-				cursor.execute("UPDATE tbhoax SET lbl1 = %s WHERE id = %s" % (i, corpus_id[0]))
+				cursor.execute("UPDATE tbhoax2 SET lbl1 = %s WHERE id = %s" % (i, corpus_id[0]))
 				self.conn.commit()
 
 	#tokenizing + stopwords removal
 	def stpwrd(self):
 		print("Tokenizing + Stopwords Removal")
 		cursor = self.conn.cursor()
-		cursor.execute("SELECT corpus FROM tbhoax ORDER BY id ASC")
+		cursor.execute("SELECT corpus FROM tbhoax2 ORDER BY id ASC")
 		row = cursor.fetchall()
 		documents = []
 		
@@ -131,7 +135,6 @@ class Hoaxdtc(object):
 
 		#transformation to whole corpus
 		corpus_tfidf = tfidf[corpus]
-
 		#LDA Proccess
 		lda = models.LdaModel(corpus, id2word=dictionary, num_topics=2)
 		corpus_lda = lda[corpus_tfidf]
@@ -153,20 +156,20 @@ class Hoaxdtc(object):
 		    i += 1
 
 		item = iter(temp)
-		cursor.execute('SELECT id FROM tbhoax ORDER BY id ASC')
+		cursor.execute('SELECT id FROM tbhoax2 ORDER BY id ASC')
 		data = cursor.fetchall()
 		for corpus_id in data:
 			if len(temp) != 0:
 				i = next(item)
 				#print(i)
-				cursor.execute("UPDATE tbhoax SET lbl2 = %s WHERE id = %s" % (i, corpus_id[0]))
+				cursor.execute("UPDATE tbhoax2 SET lbl2 = %s WHERE id = %s" % (i, corpus_id[0]))
 				self.conn.commit()
 
 	#tokenizing + stopwords removal + stemming
 	def stemg(self):
 		print("Tokenizing + Stopwords Removal + Stemming")
 		cursor = self.conn.cursor()
-		cursor.execute("SELECT corpus FROM tbhoax ORDER BY id ASC")
+		cursor.execute("SELECT corpus FROM tbhoax2 ORDER BY id ASC")
 		row = cursor.fetchall()
 		
 		factory = StemmerFactory()
@@ -207,7 +210,6 @@ class Hoaxdtc(object):
 
 		#transformation to whole corpus
 		corpus_tfidf = tfidf[corpus]
-
 		#LDA Proccess
 		lda = models.LdaModel(corpus, id2word=dictionary, num_topics=2)
 		corpus_lda = lda[corpus_tfidf]
@@ -229,13 +231,13 @@ class Hoaxdtc(object):
 		    i += 1
 
 		item = iter(temp)
-		cursor.execute('SELECT id FROM tbhoax ORDER BY id ASC')
+		cursor.execute('SELECT id FROM tbhoax2 ORDER BY id ASC')
 		data = cursor.fetchall()
 		for corpus_id in data:
 			if len(temp) != 0:
 				i = next(item)
 				#print(i)
-				cursor.execute("UPDATE tbhoax SET lbl3 = %s WHERE id = %s" % (i, corpus_id[0]))
+				cursor.execute("UPDATE tbhoax2 SET lbl3 = %s WHERE id = %s" % (i, corpus_id[0]))
 				self.conn.commit()
 
 	
