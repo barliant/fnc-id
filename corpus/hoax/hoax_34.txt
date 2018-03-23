@@ -1,0 +1,2 @@
+Broadcast BBM versi baru
+200136658003199 kode untuk blackBerry kirim kode ini agar blackberry mesenger (BBM) anda terganti dgn versi baru,karena BBM untuk android segera dirilis. Broadcoast lah agar aplikasi BBM anda di Perbarui,dan jika tidak di broadcast anda Akan susah mengirim pesan ke teman2 Anda atau yang biasa disebut Pending

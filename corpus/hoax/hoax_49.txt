@@ -1,0 +1,2 @@
+Broadcast Screenshot pesan whatsapp bisa ketahuan penggunanya
+Setelah beberapa tahun, kami akhirnya mencapai keputusan untuk menghadirkannya. Fungsi ini sederhana, sama seperti centang biru, Anda akan memiliki opsi untuk mengaktifkannya secara default. Jika telah tercentang, Anda akan diberi notifikasi jika seseorang telah men-screenshot percakapan Anda, begitupula sebaliknya
