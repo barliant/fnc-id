@@ -3,6 +3,7 @@
 .*.swp
 *.swp
 *.pyc
+.ipynb_checkpoints/
 
 # ignore virtualenv folders and files
 bin/
