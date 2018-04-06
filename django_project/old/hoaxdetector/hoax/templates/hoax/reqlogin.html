@@ -1,0 +1,16 @@
+{% extends 'adminlte/base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	
+  <title>
+  {% block title %}HoaxDetector{% endblock %}
+  </title>
+</head>
+<body>
+{% block content %}
+  <h1>Please Login to the website first!</h1>
+  <p>Please <a href="/accounts/login/">Login</a> to this website first. Or instead, you can access <a href="">this</a> page.</p>
+{% endblock %}
+</body>
+</html>

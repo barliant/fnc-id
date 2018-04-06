@@ -1,0 +1,104 @@
+{% extends 'adminlte/base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+  {% block title %}HoaxDetector{% endblock %}
+  </title>
+</head>
+<body>
+{% block content %}
+
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Corpus Table
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/viewcorpus">view corpus</a></li>
+        <li class="active">Corpus Table</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+       <div class="row">
+        <div class="col-xs-12">
+          <div class="box box-primary">
+            <div class="box-header">
+              <h3 class="box-title">Corpus Table</h3>
+
+              <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  
+                  <div class="input-group-btn">
+                    <a href="/train" type="button" class="btn btn-block btn-info">Train Data</a>
+                  </div>
+                  <div class="input-group-btn">
+                    <a href="/export" type="button" class="btn btn-block btn-success">Export Data</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tr>
+                  <th>Corpus</th>
+                  <th>Label</th>
+                  <th>Created At</th>
+                  <th>Action</th>
+                </tr>
+                {% for corpus in corpora %}
+                  <tr>
+                    <td style="max-width: 307px; 
+                    overflow: hidden; 
+                    text-overflow: ellipsis;
+                    white-space: nowrap; 
+                    display: block; 
+                    font-weight: bold;">{{ corpus.corpus }}</td>
+                    <td>{{ corpus.label }}</td>
+                    <td>{{ corpus.created_at }}</td>
+                    <td>
+                      <a href="/delete/{{ corpus.id }}">Delete </a> | 
+                      <a href="/detail/{{ corpus.id }}"> Detail </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </table>
+            </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer clearfix">
+              {% if corpora.has_other_pages %}
+                <ul class="pagination pagination-sm no-margin pull-right">
+                {% if corpora.has_previous %}
+                  <li><a href="?page={{ corpora.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in corpora.paginator.page_range %}
+                  {% if corpora.number == i %}
+                   <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                  {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if corpora.has_next %}
+                  <li><a href="?page={{ corpora.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                  <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+                </ul>
+              {% endif %}
+            </div>
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+    </section>
+{% endblock %}
+</body>
+</html>

@@ -9,7 +9,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
-	return redirect('/main')
+	return redirect('/home')
 
 
 @login_required(login_url="/accounts/login/")

@@ -1,0 +1,56 @@
+{% extends 'adminlte/base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+  {% block title %}HoaxDetector{% endblock %}
+  </title>
+</head>
+<body>
+{% block content %}
+   <!-- Content Wrapper. Contains page content -->
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Corpus Detail
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/viewcorpus">view corpus</a></li>
+        <li class="active">Corpus Detail</li>
+      </ol>
+    </section>
+
+    	<!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">           
+          <!-- general form elements disabled -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+	            <h3 class="box-title">Label : {{ corpora.label }}</h3>
+	            </div>
+	            <!-- /.box-header -->
+	            <div class="box-body">
+	                <!-- textarea --> 
+	                <div class="form-group">
+	                  <label>Content</label>
+	                	<p>{{ corpora.corpus }}</p>
+	                </div>
+                <div class="box-footer">
+                <a type="button" href="/viewcorpus" class="btn btn-block btn-primary">Back</a>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+{% endblock %}
+</body>
+</html>
