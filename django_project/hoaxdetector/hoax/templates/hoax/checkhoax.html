@@ -13,7 +13,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Check Hoax
+        Check Corpus
       </h1>
       <ol class="breadcrumb">
         <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -29,23 +29,35 @@
           <!-- general form elements disabled -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Hoax/Fact?</h3>
+              
             </div>
             <!-- /.box-header -->
             <div class="box-body">
               <form role="form">       
                 <!-- textarea -->
                 <div class="form-group">
-                <label>Minimal</label>
+                <label>Corpus</label>
                 <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                  <option selected="selected">Alabama</option>
-                  <option>Alaska</option>
-                  <option>California</option>
-                  <option>Delaware</option>
-                  <option>Tennessee</option>
-                  <option>Texas</option>
-                  <option>Washington</option>
+                  <option selected="selected">Choose One</option>
+                  <option>Fakta</option>
+                  <option>Hoax</option>
+                </select> <br>
+
+                <label>Pre-process</label>
+                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                  <option selected="selected">Choose One</option>
+                  <option>Stopwords Removal</option>
+                  <option>Stemming</option>
+                  </select> <br>
+
+                <label>Method</label>
+                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                  <option selected="selected">Choose One</option>
+                  <option>Word Cloud</option>
+                  <option>Doc2Vec</option>
+                  <option>networkx</option>
                 </select>
+
               </div>
                 <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Check!</button>
