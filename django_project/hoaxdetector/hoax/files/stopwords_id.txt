@@ -9,6 +9,7 @@
 7
 8
 9
+a
 ada
 adalah
 adanya
@@ -45,6 +46,7 @@ ataukah
 ataupun
 awal
 awalnya
+b
 bagai
 bagaikan
 bagaimana
@@ -140,12 +142,14 @@ bukanlah
 bukannya
 bulan
 bung
+c
 cara
 caranya
 cukup
 cukupkah
 cukuplah
 cuma
+d
 dahulu
 dalam
 dan
@@ -243,13 +247,17 @@ diungkapkan
 dong
 dua
 dulu
+e
 empat
 enggak
 enggaknya
 entah
 entahlah
+f
+g
 guna
 gunakan
+h
 hal
 hampir
 hanya
@@ -262,6 +270,7 @@ hendak
 hendaklah
 hendaknya
 hingga
+i
 ia
 ialah
 ibarat
@@ -280,6 +289,7 @@ inilah
 itu
 itukah
 itulah
+j
 jadi
 jadilah
 jadinya
@@ -300,6 +310,7 @@ juga
 jumlah
 jumlahnya
 justru
+k
 kala
 kalau
 kalaulah
@@ -354,6 +365,7 @@ kita
 kitalah
 kok
 kurang
+l
 lagi
 lagian
 lah
@@ -368,6 +380,7 @@ lebih
 lewat
 lima
 luar
+m
 macam
 maka
 makanya
@@ -481,6 +494,7 @@ mulailah
 mulanya
 mungkin
 mungkinkah
+n
 nah
 naik
 namun
@@ -488,8 +502,10 @@ nanti
 nantinya
 nyaris
 nyatanya
+o
 oleh
 olehnya
+p
 pada
 padahal
 padanya
@@ -519,10 +535,13 @@ pukul
 pula
 pun
 punya
+q
+r
 rasa
 rasanya
 rata
 rupanya
+s
 saat
 saatnya
 saja
@@ -677,6 +696,7 @@ sudah
 sudahkah
 sudahlah
 supaya
+t
 tadi
 tadinya
 tahu
@@ -744,6 +764,7 @@ tunjuk
 turut
 tutur
 tuturnya
+u
 ucap
 ucapnya
 ujar
@@ -755,6 +776,8 @@ ungkapnya
 untuk
 usah
 usai
+v
+w
 waduh
 wah
 wahai
@@ -763,8 +786,11 @@ waktunya
 walau
 walaupun
 wong
+x
+y
 yaitu
 yakin
 yakni
 yang
 yg
+z

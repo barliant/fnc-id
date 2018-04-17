@@ -33,29 +33,31 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <form role="form">       
+              <form role="form" action = "/checkhoax/analyze" method="post"> 
+              {% csrf_token %}          
                 <!-- textarea -->
                 <div class="form-group">
                 <label>Corpus</label>
-                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                <select name="label" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                   <option selected="selected">Choose One</option>
-                  <option>Fakta</option>
-                  <option>Hoax</option>
+                  <option value="Fakta">Fakta</option>
+                  <option value="Hoax">Hoax</option>
                 </select> <br>
 
                 <label>Pre-process</label>
-                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                <select name='process' class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                   <option selected="selected">Choose One</option>
-                  <option>Stopwords Removal</option>
-                  <option>Stemming</option>
+                  <option value="stop">Stopwords Removal</option>
+                  <option value="stem">Stemming</option>
+                  <option value="stopstem">Stopwords Removal + Stemming</option>
                   </select> <br>
 
                 <label>Method</label>
-                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                <select name='method' class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                   <option selected="selected">Choose One</option>
-                  <option>Word Cloud</option>
-                  <option>Doc2Vec</option>
-                  <option>networkx</option>
+                  <option value='wordcloud'>Word Cloud</option>
+                  <option value="docvec">Doc2Vec</option>
+                  <option value="sna">Social Network Analysis</option>
                 </select>
 
               </div>

@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 	'hoax',
     'accounts',
-    #'mainapp',
+    'mainapp',
     'django_adminlte',
     'django_adminlte_theme',
     'django.contrib.admin',

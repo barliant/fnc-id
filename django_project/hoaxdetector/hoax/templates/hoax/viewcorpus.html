@@ -33,9 +33,7 @@
               <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
                   
-                  <div class="input-group-btn">
-                    <a href="/train" type="button" class="btn btn-block btn-info">Train Data</a>
-                  </div>
+                 
                   <div class="input-group-btn">
                     <a href="/export" type="button" class="btn btn-block btn-success">Export Data</a>
                   </div>
@@ -46,7 +44,7 @@
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tr>
-                  <th>Corpus</th>
+                  <th>Title</th>
                   <th>Label</th>
                   <th>Created At</th>
                   <th>Action</th>
@@ -58,7 +56,7 @@
                     text-overflow: ellipsis;
                     white-space: nowrap; 
                     display: block; 
-                    font-weight: bold;">{{ corpus.corpus }}</td>
+                    font-weight: bold;">{{ corpus.title }}</td>
                     <td>{{ corpus.label }}</td>
                     <td>{{ corpus.created_at }}</td>
                     <td>

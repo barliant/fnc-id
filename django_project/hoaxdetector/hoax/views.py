@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
-from hoax.models import Hoax
+from hoax.models import Corpus
 from django.db import connection
-from gensim import corpora
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import csv
@@ -9,7 +8,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
-	return redirect('/home')
+	return redirect('/main')
 
 
 @login_required(login_url="/accounts/login/")
@@ -30,15 +29,14 @@ def addcorpus(request):
 @login_required(login_url="/accounts/login/")
 def input(request):
 	print(request.POST)
-	corpus = Hoax(corpus=request.POST['corpus'], label = None)
+	corpus = Corpus(title=request.POST['title'], corpus=request.POST['corpus'], label=request.POST['label'])
 	corpus.save()
-	vslda()
 	return redirect('/viewcorpus')
 
 
 @login_required(login_url="/accounts/login/")
 def viewcorpus(request):
-	corpora = Hoax.objects.all().order_by('id')
+	corpora = Corpus.objects.all().order_by('id')
 	page = request.GET.get('page', 1)
 	paginator = Paginator(corpora, 7)
 	try:
@@ -54,22 +52,17 @@ def viewcorpus(request):
 
 @login_required(login_url="/accounts/login/")
 def delete(request, id):
-	corpus = Hoax.objects.get(id=id)
+	corpus = Corpus.objects.get(id=id)
 	corpus.delete()
 	return redirect('/viewcorpus') 
 
 
 @login_required(login_url="/accounts/login/")
 def detail(request, id):
-	corpora = Hoax.objects.get(id=id)
+	corpora = Corpus.objects.get(id=id)
 	context = {'corpora' : corpora}
 	return render(request, 'hoax/detailcorpus.html', context)
 
-
-@login_required(login_url="/accounts/login/")
-def train(request):
-	vslda()
-	return redirect('/viewcorpus') 
 
 
 @login_required(login_url="/accounts/login/")
@@ -79,14 +72,166 @@ def export(request):
     response['Content-Disposition'] = 'attachment; filename="corpusexport.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['ID', 'Corpus', 'Label', 'Created_at'])
+    writer.writerow(['ID', 'Title', 'Corpus', 'Label', 'Created_at'])
    
-    for row in Hoax.objects.raw('SELECT * FROM hoax_hoax ORDER BY id ASC'):
-    	writer.writerow([row.id, row.corpus, row.label, row.created_at]) 
+    for row in Corpus.objects.raw('SELECT * FROM hoax_corpus ORDER BY id ASC'):
+    	writer.writerow([row.id, row.title, row.corpus, row.label, row.created_at]) 
     return response
 
+@login_required(login_url="/accounts/login/")
+def analyze(request):
+	print(request.POST)
+	corpus = request.POST['label']
+	process = request.POST['process']
+	normalize(corpus)
+	if process == 'stop':
+		stopwords_removal(corpus)
+	elif process == 'stem':
+		stemming(corpus)
+	elif process == 'stopstem':
+		stop_stem(corpus)
 
-def vs():
+
+	return redirect('/checkhoax')
+
+def normalize(label):
+	#code to remove symbol and lowercase corpus from db and save to label_normalize.txt file
+	import itertools
+	import re
+
+	cursor = connection.cursor()
+	cursor.execute("SELECT corpus FROM hoax_corpus WHERE label = '%s' ORDER BY id ASC"  % (label))
+	row = cursor.fetchall()
+
+	#joining list of tuple into list of str
+	doc = [i for i in itertools.chain(*row)]
+	#joining list of str into 1 list
+	docs = ' '.join(doc)
+	#lowercase
+	low = docs.lower()
+	#remove symbol and number
+	new_doc = re.sub('[^a-zA-Z\n]', ' ', low)
+	#write to file
+	if label == 'Hoax':
+		open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/hoax_normalize.txt', 'w').write(new_doc)
+	elif label == 'Fakta':
+		open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/fakta_normalize.txt', 'w').write(new_doc)	
+
+
+def stopwords_removal(label): 
+	#code to remove stopwords from normalize.txt and save to label_final.txt file
+	if label == 'Hoax': 
+		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/hoax_normalize.txt', 'r')
+		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/hoax_final.txt', 'w')
+	elif label == 'Fakta':
+		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/fakta_normalize.txt', 'r')
+		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/fakta_final.txt', 'w')
+
+	f2 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/stopwords_id.txt', 'r')
+
+	first_words=[]
+	second_words=[]
+	for line in f1:
+	    words = line.split()
+	    for w in words:
+	        first_words.append(w)
+
+	for line in f2:
+	    w = line.split()
+	    for i in w:
+	        second_words.append(i)
+
+
+	for word1 in first_words :
+	    for word2 in second_words:
+	        if word1 == word2:
+	            while True:
+	                try:
+	                    first_words.remove(word2)
+	                except:
+	                    break
+	            
+
+	for word in first_words:
+	    f3.write(word)
+	    f3.write(' ')
+
+	f1.close()
+	f2.close()
+	f3.close()
+
+
+def stemming(label):	
+	#code to stem corpus from normalize.txt and save to label_final.txt file
+	from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+	factory = StemmerFactory()
+	stemmer = factory.create_stemmer()
+	if label == 'Hoax':
+		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/hoax_normalize.txt').read()
+		final = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/hoax_final.txt', 'w')
+	elif label == 'Fakta':
+		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/fakta_normalize.txt').read()
+		final = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/fakta_final.txt', 'w')
+	
+	stemmed = stemmer.stem(file)
+	final.write(stemmed)
+	final.close()
+
+
+def stop_stem(label):	
+	#code to remove stopwords and stem corpus from normalize.txt and save to label_final.txt file
+	from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+	
+	if label == 'Hoax': 
+		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/hoax_normalize.txt', 'r')
+		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/hoax_final.txt', 'w')
+	elif label == 'Fakta':
+		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/fakta_normalize.txt', 'r')
+		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/fakta_final.txt', 'w')
+
+	f2 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/stopwords_id.txt', 'r')
+
+	first_words=[]
+	second_words=[]
+	for line in f1:
+	    words = line.split()
+	    for w in words:
+	        first_words.append(w)
+
+	for line in f2:
+	    w = line.split()
+	    for i in w:
+	        second_words.append(i)
+
+
+	for word1 in first_words :
+	    for word2 in second_words:
+	        if word1 == word2:
+	            while True:
+	                try:
+	                    first_words.remove(word2)
+	                except:
+	                    break
+	  
+	factory = StemmerFactory()
+	stemmer = factory.create_stemmer()          
+	docs = ' '.join(first_words)
+	stemmed = stemmer.stem(docs)
+	f3.write(stemmed)
+	f3.close()
+
+	f1.close()
+	f2.close()
+	f3.close()
+
+
+'''def wordcloud(label):	#code to make wordcloud from label_final.txt
+
+def sna(label):	#code to make sna from label_final.txt 
+
+def docvec(label):	#code to make doc2vec analysis from label_final.txt'''
+
+'''def vs():
 
     cursor = connection.cursor()
     cursor.execute("SELECT corpus FROM hoax_hoax ORDER BY id ASC")
@@ -190,7 +335,7 @@ def vslda():
 		if len(temp) != 0:
 			i = next(item)
 			print(i)
-			cursor.execute("UPDATE hoax_hoax SET label = %s WHERE id = %s" % (i, corpus_id.id))
+			cursor.execute("UPDATE hoax_hoax SET label = %s WHERE id = %s" % (i, corpus_id.id))'''
 		 	
 
 	

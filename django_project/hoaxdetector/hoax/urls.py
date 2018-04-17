@@ -10,6 +10,6 @@ urlpatterns = [
 	url(r'^viewcorpus$', views.viewcorpus),
 	url(r'^delete/(?P<id>\d+)$', views.delete),
 	url(r'^detail/(?P<id>\d+)$', views.detail),
-	url(r'^train$', views.train),
 	url(r'^export$', views.export),
+	url(r'^checkhoax/analyze$', views.analyze),
 ]
