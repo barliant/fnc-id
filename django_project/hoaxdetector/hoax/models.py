@@ -12,4 +12,5 @@ class Result(models.Model):
 	label = models.TextField()
 	process = models.TextField()
 	method = models.TextField()
-	result = models.TextField()
+	result_img = models.TextField()
+	result_txt = models.TextField()

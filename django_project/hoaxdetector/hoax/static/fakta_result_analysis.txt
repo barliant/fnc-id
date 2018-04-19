@@ -1,0 +1,11 @@
+10 kata terbanyak pada corpus Fakta adalah: 
+di, 
+yang, 
+dan, 
+ini, 
+dari, 
+sebut, 
+untuk, 
+dengan, 
+itu, 
+ada, 
