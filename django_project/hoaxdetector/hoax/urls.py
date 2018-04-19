@@ -12,4 +12,5 @@ urlpatterns = [
 	url(r'^detail/(?P<id>\d+)$', views.detail),
 	url(r'^export$', views.export),
 	url(r'^checkhoax/analyze$', views.analyze),
+	url(r'^result$', views.result),
 ]

@@ -4,7 +4,8 @@ from django.db import connection
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import csv
-from django.http import HttpResponse
+from django.http import HttpResponse	
+from nltk.book import *
 
 # Create your views here.
 def index(request):
@@ -63,6 +64,10 @@ def detail(request, id):
 	context = {'corpora' : corpora}
 	return render(request, 'hoax/detailcorpus.html', context)
 
+def result(request):
+	data = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/dummy.txt', 'r').read()
+	img = 'graph.png'
+	return render(request, 'hoax/result.html', {'data' : data, 'imej' : img})
 
 
 @login_required(login_url="/accounts/login/")
@@ -83,16 +88,42 @@ def analyze(request):
 	print(request.POST)
 	corpus = request.POST['label']
 	process = request.POST['process']
+	method = request.POST['method']
 	normalize(corpus)
+	
+	cursor = connection.cursor()
 	if process == 'stop':
 		stopwords_removal(corpus)
+		if method == 'wordcloud':
+			wc = wordcloud(corpus)
+			cursor.execute("INSERT INTO hoax_result (label, process, method, result) VALUES ('%s', '%s', '%s', '%s')" % (corpus, process, method, wc))
+		'''elif method == 'sna':
+			sna(corpus)
+		elif method == 'docvec':
+			docvec(corpus)'''
+
 	elif process == 'stem':
 		stemming(corpus)
+		if method == 'wordcloud':
+			wc = wordcloud(corpus)
+			cursor.execute("INSERT INTO hoax_result (label, process, method, result) VALUES ('%s', '%s', '%s', '%s')" % (corpus, process, method, wc))
+		'''elif method == 'sna':
+			sna(corpus)
+		elif method == 'docvec':
+			docvec(corpus)'''
+
 	elif process == 'stopstem':
 		stop_stem(corpus)
-
+		if method == 'wordcloud':
+			wc = wordcloud(corpus)
+			cursor.execute("INSERT INTO hoax_result (label, process, method, result) VALUES ('%s', '%s', '%s', '%s')" % (corpus, process, method, wc))
+		'''elif method == 'sna':
+			sna(corpus)
+		elif method == 'docvec':
+			docvec(corpus)'''
 
 	return redirect('/checkhoax')
+
 
 def normalize(label):
 	#code to remove symbol and lowercase corpus from db and save to label_normalize.txt file
@@ -113,21 +144,21 @@ def normalize(label):
 	new_doc = re.sub('[^a-zA-Z\n]', ' ', low)
 	#write to file
 	if label == 'Hoax':
-		open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/hoax_normalize.txt', 'w').write(new_doc)
+		open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt', 'w').write(new_doc)
 	elif label == 'Fakta':
-		open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/fakta_normalize.txt', 'w').write(new_doc)	
+		open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'w').write(new_doc)	
 
 
 def stopwords_removal(label): 
 	#code to remove stopwords from normalize.txt and save to label_final.txt file
 	if label == 'Hoax': 
-		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/hoax_normalize.txt', 'r')
-		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/hoax_final.txt', 'w')
+		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt', 'r')
+		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'w')
 	elif label == 'Fakta':
-		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/fakta_normalize.txt', 'r')
-		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/fakta_final.txt', 'w')
+		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'r')
+		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'w')
 
-	f2 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/stopwords_id.txt', 'r')
+	f2 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/stopwords_id.txt', 'r')
 
 	first_words=[]
 	second_words=[]
@@ -167,11 +198,11 @@ def stemming(label):
 	factory = StemmerFactory()
 	stemmer = factory.create_stemmer()
 	if label == 'Hoax':
-		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/hoax_normalize.txt').read()
-		final = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/hoax_final.txt', 'w')
+		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt').read()
+		final = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'w')
 	elif label == 'Fakta':
-		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/fakta_normalize.txt').read()
-		final = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/fakta_final.txt', 'w')
+		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt').read()
+		final = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'w')
 	
 	stemmed = stemmer.stem(file)
 	final.write(stemmed)
@@ -183,13 +214,13 @@ def stop_stem(label):
 	from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 	
 	if label == 'Hoax': 
-		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/hoax_normalize.txt', 'r')
-		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/hoax_final.txt', 'w')
+		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt', 'r')
+		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'w')
 	elif label == 'Fakta':
-		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/fakta_normalize.txt', 'r')
-		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/fakta_final.txt', 'w')
+		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'r')
+		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'w')
 
-	f2 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/files/stopwords_id.txt', 'r')
+	f2 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/stopwords_id.txt', 'r')
 
 	first_words=[]
 	second_words=[]
@@ -225,10 +256,46 @@ def stop_stem(label):
 	f3.close()
 
 
-'''def wordcloud(label):	#code to make wordcloud from label_final.txt
+def wordcloud(label):	
+	#code to make wordcloud from label_final.txt
+	from wordcloud import WordCloud
+	import matplotlib.pyplot as plt
+	
+	if label == 'Hoax':	
+		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'r')
+		fig = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_wc.png'
+	elif label == 'Fakta':
+		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'r') 
+		fig = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_wc.png'
+	text = file.read()
+	#generate wordcloud image
+	wc = WordCloud().generate(text)
+	wc.to_file(fig)
 
+	#generate analysis
+	import nltk
+
+	token = nltk.word_tokenize(text)
+	freq = FreqDist(token).most_common(10)
+	teks = '10 kata terbanyak pada corpus ' + label + ' adalah: \n'
+	out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/result_analysis.txt'
+	outfile = open(out, 'w')
+	outfile.write(teks)
+	index = 0
+	while index < len(freq):
+		outfile.write( freq[index][0] + "\n")
+		index += 1
+
+	return fig
+
+
+
+
+'''
+@login_required(login_url="/accounts/login/")
 def sna(label):	#code to make sna from label_final.txt 
 
+@login_required(login_url="/accounts/login/")
 def docvec(label):	#code to make doc2vec analysis from label_final.txt'''
 
 '''def vs():
