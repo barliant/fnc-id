@@ -108,9 +108,10 @@ def analyze(request):
 		if method == 'wordcloud':
 			im, tx = wordcloud(corpus)
 			cursor.execute("INSERT INTO hoax_result (label, process, method, result_img, result_txt) VALUES ('%s', '%s', '%s', '%s', '%s')" % (corpus, process, method, im, tx))
-		'''elif method == 'sna':
-			sna(corpus)
-		elif method == 'docvec':
+		elif method == 'sna':
+			im, tx = sna(corpus)
+			cursor.execute("INSERT INTO hoax_result (label, process, method, result_img, result_txt) VALUES ('%s', '%s', '%s', '%s', '%s')" % (corpus, process, method, im, tx))
+		'''elif method == 'docvec':
 			docvec(corpus)'''
 
 	elif process == 'stem':
@@ -118,9 +119,10 @@ def analyze(request):
 		if method == 'wordcloud':
 			im, tx = wordcloud(corpus)
 			cursor.execute("INSERT INTO hoax_result (label, process, method, result_img, result_txt) VALUES ('%s', '%s', '%s', '%s', '%s')" % (corpus, process, method, im, tx))
-		'''elif method == 'sna':
-			sna(corpus)
-		elif method == 'docvec':
+		elif method == 'sna':
+			im, tx = sna(corpus)
+			cursor.execute("INSERT INTO hoax_result (label, process, method, result_img, result_txt) VALUES ('%s', '%s', '%s', '%s', '%s')" % (corpus, process, method, im, tx))
+		'''elif method == 'docvec':
 			docvec(corpus)'''
 
 	elif process == 'stopstem':
@@ -128,9 +130,10 @@ def analyze(request):
 		if method == 'wordcloud':
 			im, tx = wordcloud(corpus)
 			cursor.execute("INSERT INTO hoax_result (label, process, method, result_img, result_txt) VALUES ('%s', '%s', '%s', '%s', '%s')" % (corpus, process, method, im, tx))
-		'''elif method == 'sna':
-			sna(corpus)
-		elif method == 'docvec':
+		elif method == 'sna':
+			im, tx = sna(corpus)
+			cursor.execute("INSERT INTO hoax_result (label, process, method, result_img, result_txt) VALUES ('%s', '%s', '%s', '%s', '%s')" % (corpus, process, method, im, tx))
+		'''elif method == 'docvec':
 			docvec(corpus)'''
 
 	return redirect('/result')
@@ -305,8 +308,87 @@ def wordcloud(label):
 
 
 
+
+def sna(label):	
+	#code to make sna from label_final.txt 
+	import networkx as nx
+	import matplotlib.pyplot as plt
+	from operator import itemgetter
+
+	G = nx.Graph()
+
+	if label == 'Hoax':	
+		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'r')
+		fig = 'hoax_sna.png'
+		out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_result_analysis.txt'
+		#outfig = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/sna/hoax_sna.html'
+	elif label == 'Fakta':
+		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'r') 
+		fig = 'fakta_sna.png'
+		out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_result_analysis.txt'
+		#outfig = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/sna/fakta_sna.html'
+
+	path = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/'
+	
+	#add edges to network
+	doc = file.read()
+	words = doc.split()
+	i = 0
+	for idx in range(1, len(words)):
+		G.add_edge(words[idx-1], words[idx])
+		i += 1
+
+	#draw graph
+	labels = {}
+	for idx in range(len(words)):
+		labels[idx] = words[idx]
+
+	pos = nx.spring_layout(G)
+	nx.draw(G, pos, node_color = '#A0CBE2', font_size = 5, scale = 3, edge_color='#BB0000', width=2, edge_cmap=plt.cm.Blues, with_labels=True)
+	plt.savefig(path+fig, dpi = 1000)
+
+	#degree centrality
+	deg_cen = nx.degree_centrality(G)
+	sorted_degcen = sorted(deg_cen.items(), key=itemgetter(1), reverse=True)
+
+	#betweenness centrality
+	bet_cen = nx.betweenness_centrality(G)
+	sorted_betcen = sorted(bet_cen.items(), key=itemgetter(1), reverse=True)
+
+	#closeness centrality
+	clo_cen = nx.closeness_centrality(G)
+	sorted_clocen = sorted(clo_cen.items(), key=itemgetter(1), reverse=True)
+
+	teks1 = '20 Node paling sentral adalah: \n 1. Degree Centrality : \n'
+	outfile = open(out, 'w')
+	outfile.write(teks1)
+	for b in sorted_degcen[:20]:
+		outfile.write( b[0] + ", \n")
+	teks2 = '2. Betweenness Centrality : \n'
+	outfile.write(teks2)
+	for b in sorted_betcen[:20]:
+		outfile.write( b[0] + ", \n")
+	teks3 = '3. Closeness Centrality : \n'
+	outfile.write(teks3)
+	for b in sorted_clocen[:20]:
+		outfile.write( b[0] + ", \n")
+
+	return fig, out
+
+
+
+
+	'''for n in G:
+		G.node[n]['name'] = n
+	d = json_graph.node_link_data(G)
+	json.dump(d, open(fig, 'w'))
+
+	import http_server
+	http_server.load_url(outfig)'''
+
+
+
+
+
 '''
-def sna(label):	#code to make sna from label_final.txt 
-
-
 def docvec(label):	#code to make doc2vec analysis from label_final.txt'''
