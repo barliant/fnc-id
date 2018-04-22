@@ -107,35 +107,30 @@ def analyze(request):
 		stopwords_removal(corpus)
 		if method == 'wordcloud':
 			im, tx = wordcloud(corpus)
-			cursor.execute("INSERT INTO hoax_result (label, process, method, result_img, result_txt) VALUES ('%s', '%s', '%s', '%s', '%s')" % (corpus, process, method, im, tx))
 		elif method == 'sna':
 			im, tx = sna(corpus)
-			cursor.execute("INSERT INTO hoax_result (label, process, method, result_img, result_txt) VALUES ('%s', '%s', '%s', '%s', '%s')" % (corpus, process, method, im, tx))
-		'''elif method == 'docvec':
-			docvec(corpus)'''
+		elif method == 'docvec':
+			im, tx = docvec(corpus)
 
 	elif process == 'stem':
 		stemming(corpus)
 		if method == 'wordcloud':
-			im, tx = wordcloud(corpus)
-			cursor.execute("INSERT INTO hoax_result (label, process, method, result_img, result_txt) VALUES ('%s', '%s', '%s', '%s', '%s')" % (corpus, process, method, im, tx))
+			im, tx = wordcloud(corpus)	
 		elif method == 'sna':
 			im, tx = sna(corpus)
-			cursor.execute("INSERT INTO hoax_result (label, process, method, result_img, result_txt) VALUES ('%s', '%s', '%s', '%s', '%s')" % (corpus, process, method, im, tx))
-		'''elif method == 'docvec':
-			docvec(corpus)'''
-
+		elif method == 'docvec':
+			im, tx = docvec(corpus)
+			
 	elif process == 'stopstem':
 		stop_stem(corpus)
 		if method == 'wordcloud':
 			im, tx = wordcloud(corpus)
-			cursor.execute("INSERT INTO hoax_result (label, process, method, result_img, result_txt) VALUES ('%s', '%s', '%s', '%s', '%s')" % (corpus, process, method, im, tx))
 		elif method == 'sna':
 			im, tx = sna(corpus)
-			cursor.execute("INSERT INTO hoax_result (label, process, method, result_img, result_txt) VALUES ('%s', '%s', '%s', '%s', '%s')" % (corpus, process, method, im, tx))
-		'''elif method == 'docvec':
-			docvec(corpus)'''
+		elif method == 'docvec':
+			im, tx = docvec(corpus)
 
+	cursor.execute("INSERT INTO hoax_result (label, process, method, result_img, result_txt) VALUES ('%s', '%s', '%s', '%s', '%s')" % (corpus, process, method, im, tx))
 	return redirect('/result')
 
 
@@ -145,7 +140,10 @@ def normalize(label):
 	import re
 
 	cursor = connection.cursor()
-	cursor.execute("SELECT corpus FROM hoax_corpus WHERE label = '%s' ORDER BY id ASC"  % (label))
+	if label == 'All':
+		cursor.execute("SELECT corpus FROM hoax_corpus ORDER BY id ASC")
+	else:
+		cursor.execute("SELECT corpus FROM hoax_corpus WHERE label = '%s' ORDER BY id ASC"  % (label))
 	row = cursor.fetchall()
 
 	#joining list of tuple into list of str
@@ -160,7 +158,9 @@ def normalize(label):
 	if label == 'Hoax':
 		open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt', 'w').write(new_doc)
 	elif label == 'Fakta':
-		open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'w').write(new_doc)	
+		open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'w').write(new_doc)
+	elif label == 'All':
+		open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt', 'w').write(new_doc)	
 
 
 def stopwords_removal(label): 
@@ -171,6 +171,9 @@ def stopwords_removal(label):
 	elif label == 'Fakta':
 		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'r')
 		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'w')
+	elif label == 'All':
+		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt', 'r')
+		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'w')
 
 	f2 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/stopwords_id.txt', 'r')
 
@@ -217,6 +220,9 @@ def stemming(label):
 	elif label == 'Fakta':
 		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt').read()
 		final = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'w')
+	elif label == 'All':
+		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt').read()
+		final = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'w')
 	
 	stemmed = stemmer.stem(file)
 	final.write(stemmed)
@@ -233,6 +239,9 @@ def stop_stem(label):
 	elif label == 'Fakta':
 		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'r')
 		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'w')
+	elif label == 'All':
+		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt', 'r')
+		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'w')
 
 	f2 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/stopwords_id.txt', 'r')
 
@@ -283,6 +292,10 @@ def wordcloud(label):
 		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'r') 
 		fig = 'fakta_wc.png'
 		out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_result_analysis.txt'
+	elif label == 'All':
+		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'r') 
+		fig = 'all_wc.png'
+		out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_result_analysis.txt'
 	path = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/'
 	text = file.read()
 	#generate wordcloud image
@@ -327,6 +340,10 @@ def sna(label):
 		fig = 'fakta_sna.png'
 		out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_result_analysis.txt'
 		#outfig = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/sna/fakta_sna.html'
+	elif label == 'All':
+		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'r') 
+		fig = 'all_sna.png'
+		out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_result_analysis.txt'
 
 	path = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/'
 	
@@ -361,15 +378,15 @@ def sna(label):
 
 	teks1 = '20 Node paling sentral adalah: \n 1. Degree Centrality : \n'
 	outfile = open(out, 'w')
-	outfile.write(teks1)
+	outfile.write(teks1 + "\n")
 	for b in sorted_degcen[:20]:
 		outfile.write( b[0] + ", \n")
 	teks2 = '2. Betweenness Centrality : \n'
-	outfile.write(teks2)
+	outfile.write(teks2 + "\n")
 	for b in sorted_betcen[:20]:
 		outfile.write( b[0] + ", \n")
 	teks3 = '3. Closeness Centrality : \n'
-	outfile.write(teks3)
+	outfile.write(teks3 + "\n")
 	for b in sorted_clocen[:20]:
 		outfile.write( b[0] + ", \n")
 
@@ -389,6 +406,58 @@ def sna(label):
 
 
 
+def docvec(label):	#code to make doc2vec analysis from label_final.txt
+	from gensim import models
+	if label == 'All':
+		file_f = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt').read()
+		file_h = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt').read()
+		fig = 'all_docvec.png'
+		out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_result_analysis.txt'
+	
+	path = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/'
+	list_f = file_f.split()
+	list_h = file_h.split()
 
-'''
-def docvec(label):	#code to make doc2vec analysis from label_final.txt'''
+	sentence = models.doc2vec.LabeledSentence(
+    words=list_f, tags=["SENT_fakta"])
+	sentence1 = models.doc2vec.LabeledSentence(
+    words=list_h, tags=["SENT_hoax"])
+
+	sentences = [sentence, sentence1]
+	token_count = sum([len(sentence) for sentence in sentences])
+
+	#???????
+	class LabeledLineSentence(object):
+	    def __init__(self, filename):
+	        self.filename = filename
+	    def __iter__(self):
+	        for uid, line in enumerate(open(filename)):
+	            yield LabeledSentence(words=line.split(), labels=['SENT_%s' % uid])
+	            
+	model = models.Doc2Vec(dm=0, alpha=.025, min_alpha=.025, min_count=1)
+	model.build_vocab(sentences)
+
+	for epoch in range(10):
+	    model.train(sentences, total_examples = token_count, epochs = model.iter)
+	    model.alpha -= 0.002  # decrease the learning rate`
+	    model.min_alpha = model.alpha  # fix the learning rate, no decay
+
+	model.save("/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/my_model.doc2vec")
+	model_loaded = models.Doc2Vec.load('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/my_model.doc2vec')
+
+	cosine_similarities = []
+	for r in range(2):
+		for t in range(r+1, 2):
+			cosine_similarities.append(model.docvecs.similarity(r,t))
+	teks = 'Nilai Cosine Similarities antara corpus hoax dan fakta adalah sebesar: '+ str(cosine_similarities)
+	outfile = open(out, 'w')
+	outfile.write(teks)
+
+	import matplotlib.pyplot as plt
+	plt.hist(cosine_similarities, 50, facecolor='green', alpha=0.5)
+	plt.title('Distribution of Cosine Similarities')
+	plt.ylabel('Frequency')
+	plt.xlabel('Cosine Similarity')
+	plt.savefig(path+fig)
+
+	return fig, out

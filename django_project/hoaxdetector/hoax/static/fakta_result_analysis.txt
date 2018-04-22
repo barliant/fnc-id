@@ -1,5 +1,6 @@
 20 Node paling sentral adalah: 
  1. Degree Centrality : 
+
 indonesia, 
 jakarta, 
 orang, 
@@ -21,6 +22,7 @@ juta,
 salah, 
 pemerintah, 
 2. Betweenness Centrality : 
+
 indonesia, 
 jakarta, 
 senin, 
@@ -41,7 +43,8 @@ masyarakat,
 akun, 
 kpk, 
 warga, 
-2. Betweenness Centrality : 
+3. Closeness Centrality : 
+
 indonesia, 
 jakarta, 
 senin, 

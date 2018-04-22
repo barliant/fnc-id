@@ -25,14 +25,39 @@
 		<div class="contact100-map" id="google_map" data-map-x="40.722047" data-map-y="-73.986422" data-pin="{% static 'images/icons/map-marker.png' %}" data-scrollwhell="0" data-draggable="1"></div>
 
 		<div class="wrap-contact100">
-			<form class="contact100-form validate-form">
+			<form class="contact100-form validate-form" role="form" action = "/main/analisa" method="post">
+				{% csrf_token %} 
 				<span class="contact100-form-title">
 					Is it Hoax or Not?
 				</span>
 
 				<div class="wrap-input100 validate-input" data-validate = "Please enter the article you want to check">
-					<textarea class="input100" name="article" placeholder="Enter the article you want to check"></textarea>
-					<span class="focus-input100"></span>
+					<div class="form-group">
+                <label>Corpus</label>
+                <select name="label" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                  <option selected="selected">Choose One</option>
+                  <option value="Fakta">Fakta</option>
+                  <option value="Hoax">Hoax</option>
+                  <option value="All">All</option>
+                </select> <br>
+
+                <label>Pre-process</label>
+                <select name='process' class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                  <option selected="selected">Choose One</option>
+                  <option value="stop">Stopwords Removal</option>
+                  <option value="stem">Stemming</option>
+                  <option value="stopstem">Stopwords Removal + Stemming</option>
+                  </select> <br>
+
+                <label>Method</label>
+                <select name='method' class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                  <option selected="selected">Choose One</option>
+                  <option value='wordcloud'>Word Cloud</option>
+                  <option value="docvec">Doc2Vec</option>
+                  <option value="sna">Social Network Analysis</option>
+                </select>
+                <br><p>*note: Untuk melakukan Analisa Doc2Vec, mohon pilih Corpus dengan label "All"</p>
+              </div>
 				</div>
 
 				<div class="container-contact100-form-btn">
