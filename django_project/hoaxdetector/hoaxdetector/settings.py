@@ -83,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'django_hoax',
         'USER': 'postgres',
-        'PASSWORD': 'root',
+        'PASSWORD': 'rahajengdhanindita', #pass: root for linux
         'HOST': 'localhost',
         'PORT': '5432'
     }

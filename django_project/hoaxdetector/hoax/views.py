@@ -156,26 +156,36 @@ def normalize(label):
 	new_doc = re.sub('[^a-zA-Z\n]', ' ', low)
 	#write to file
 	if label == 'Hoax':
-		open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt', 'w').write(new_doc)
+		#open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt', 'w').write(new_doc)
+		open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt', 'w').write(new_doc)
 	elif label == 'Fakta':
-		open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'w').write(new_doc)
+		#open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'w').write(new_doc)
+		open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'w').write(new_doc)
 	elif label == 'All':
-		open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt', 'w').write(new_doc)	
+		#open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt', 'w').write(new_doc)	
+		open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt', 'w').write(new_doc)
 
 
 def stopwords_removal(label): 
 	#code to remove stopwords from normalize.txt and save to label_final.txt file
 	if label == 'Hoax': 
-		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt', 'r')
-		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'w')
+		#f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt', 'r')
+		f1 = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt', 'r')
+		#f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'w')
+		f3 = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'w')
 	elif label == 'Fakta':
-		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'r')
-		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'w')
+		#f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'r')
+		f1 = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'r')
+		#f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'w')
+		f3 = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'w')
 	elif label == 'All':
-		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt', 'r')
-		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'w')
+		#f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt', 'r')
+		f1 = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt', 'r')
+		#f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'w')
+		f3 = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'w')
 
-	f2 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/stopwords_id.txt', 'r')
+	#f2 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/stopwords_id.txt', 'r')
+	f2 = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/stopwords_id.txt', 'r')
 
 	first_words=[]
 	second_words=[]
@@ -215,14 +225,20 @@ def stemming(label):
 	factory = StemmerFactory()
 	stemmer = factory.create_stemmer()
 	if label == 'Hoax':
-		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt').read()
-		final = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'w')
+		#file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt').read()
+		file = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt').read()
+		#final = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'w')
+		final = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'w')
 	elif label == 'Fakta':
-		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt').read()
-		final = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'w')
+		#file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt').read()
+		file = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt').read()
+		#final = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'w')
+		final = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'w')
 	elif label == 'All':
-		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt').read()
-		final = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'w')
+		#file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt').read()
+		file = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt').read()
+		#final = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'w')
+		final = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'w')
 	
 	stemmed = stemmer.stem(file)
 	final.write(stemmed)
@@ -234,17 +250,24 @@ def stop_stem(label):
 	from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 	
 	if label == 'Hoax': 
-		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt', 'r')
-		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'w')
+		#f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt', 'r')
+		f1 = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_normalize.txt', 'r')
+		#f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'w')
+		f3 = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'w')
 	elif label == 'Fakta':
-		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'r')
-		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'w')
+		#f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'r')
+		f1 = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_normalize.txt', 'r')
+		#f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'w')
+		f3 = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'w')
 	elif label == 'All':
-		f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt', 'r')
-		f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'w')
+		#f1 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt', 'r')
+		f1 = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_normalize.txt', 'r')
+		#f3 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'w')
+		f3 = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'w')
 
-	f2 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/stopwords_id.txt', 'r')
-
+	#f2 = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/stopwords_id.txt', 'r')
+	f2 = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/stopwords_id.txt', 'r')
+	
 	first_words=[]
 	second_words=[]
 	for line in f1:
@@ -285,18 +308,27 @@ def wordcloud(label):
 	import matplotlib.pyplot as plt
 	
 	if label == 'Hoax':	
-		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'r')
+		#file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'r')
+		file = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'r')
 		fig = 'hoax_wc.png'
-		out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_result_analysis.txt'
+		#out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_result_analysis.txt'
+		out = 'D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_result_analysis.txt'
 	elif label == 'Fakta':
-		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'r') 
+		#file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'r') 
+		file = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'r')
 		fig = 'fakta_wc.png'
-		out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_result_analysis.txt'
+		#out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_result_analysis.txt'
+		out = 'D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_result_analysis.txt'
 	elif label == 'All':
-		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'r') 
+		#file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'r')
+		file = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'r')		
 		fig = 'all_wc.png'
-		out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_result_analysis.txt'
-	path = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/'
+		#out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_result_analysis.txt'
+		out = 'D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_result_analysis.txt'
+	
+	#path = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/'
+	path = 'D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/'
+	
 	text = file.read()
 	#generate wordcloud image
 	wc = WordCloud().generate(text)
@@ -319,9 +351,6 @@ def wordcloud(label):
 	return fig, out
 
 
-
-
-
 def sna(label):	
 	#code to make sna from label_final.txt 
 	import networkx as nx
@@ -331,21 +360,26 @@ def sna(label):
 	G = nx.Graph()
 
 	if label == 'Hoax':	
-		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'r')
+		#file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'r')
+		file = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt', 'r')
 		fig = 'hoax_sna.png'
-		out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_result_analysis.txt'
-		#outfig = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/sna/hoax_sna.html'
+		#out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_result_analysis.txt'
+		out = 'D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_result_analysis.txt'
 	elif label == 'Fakta':
-		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'r') 
+		#file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'r') 
+		file = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt', 'r')
 		fig = 'fakta_sna.png'
-		out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_result_analysis.txt'
-		#outfig = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/sna/fakta_sna.html'
+		#out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_result_analysis.txt'
+		out = 'D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_result_analysis.txt'
 	elif label == 'All':
-		file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'r') 
+		#file = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'r')
+		file = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_final.txt', 'r')		
 		fig = 'all_sna.png'
-		out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_result_analysis.txt'
-
-	path = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/'
+		#out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_result_analysis.txt'
+		out = 'D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_result_analysis.txt'
+	
+	#path = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/'
+	path = 'D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/'
 	
 	#add edges to network
 	doc = file.read()
@@ -409,12 +443,17 @@ def sna(label):
 def docvec(label):	#code to make doc2vec analysis from label_final.txt
 	from gensim import models
 	if label == 'All':
-		file_f = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt').read()
-		file_h = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt').read()
+		#file_f = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt').read()
+		file_f = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/fakta_final.txt').read()
+		#file_h = open('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt').read()
+		file_h = open('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/hoax_final.txt').read()
 		fig = 'all_docvec.png'
-		out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_result_analysis.txt'
+		#out = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_result_analysis.txt'
+		out = 'D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/all_result_analysis.txt'
+		
+	#path = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/'
+	path = 'D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/'
 	
-	path = '/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/'
 	list_f = file_f.split()
 	list_h = file_h.split()
 
@@ -442,9 +481,11 @@ def docvec(label):	#code to make doc2vec analysis from label_final.txt
 	    model.alpha -= 0.002  # decrease the learning rate`
 	    model.min_alpha = model.alpha  # fix the learning rate, no decay
 
-	model.save("/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/my_model.doc2vec")
-	model_loaded = models.Doc2Vec.load('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/my_model.doc2vec')
-
+	#model.save("/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/my_model.doc2vec")
+	model.save('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/my_model.doc2vec')
+	#model_loaded = models.Doc2Vec.load('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/my_model.doc2vec')
+	model_loaded = models.Doc2Vec.load('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/my_model.doc2vec')
+	
 	cosine_similarities = []
 	for r in range(2):
 		for t in range(r+1, 2):
@@ -453,11 +494,11 @@ def docvec(label):	#code to make doc2vec analysis from label_final.txt
 	outfile = open(out, 'w')
 	outfile.write(teks)
 
-	import matplotlib.pyplot as plt
-	plt.hist(cosine_similarities, 50, facecolor='green', alpha=0.5)
-	plt.title('Distribution of Cosine Similarities')
-	plt.ylabel('Frequency')
-	plt.xlabel('Cosine Similarity')
-	plt.savefig(path+fig)
+	import matplotlib.pyplot as pl
+	pl.hist(cosine_similarities, 50, facecolor='green', alpha=0.5)
+	pl.title('Distribution of Cosine Similarities')
+	pl.ylabel('Frequency')
+	pl.xlabel('Cosine Similarity')
+	pl.savefig(path+fig)
 
 	return fig, out

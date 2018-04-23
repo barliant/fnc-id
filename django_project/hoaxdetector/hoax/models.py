@@ -6,7 +6,6 @@ class Corpus(models.Model):
 	corpus = models.TextField()
 	label = models.TextField()
 	created_at = models.DateTimeField(auto_now_add = True) #auto now pada saat add perdana saja
-	updated_at = models.DateTimeField(auto_now = True)
 
 class Result(models.Model):
 	label = models.TextField()
