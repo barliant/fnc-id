@@ -503,18 +503,37 @@ def docvec(label):	#code to make doc2vec analysis from label_final.txt
 	model_loaded = models.Doc2Vec.load('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/my_model.doc2vec')
 	
 	similarity = model.docvecs.most_similar(["SENT_hoax"])[0][1]
+
 	teks = 'Nilai Similarities antara corpus hoax dan fakta adalah sebesar: '+ str(similarity)
 	outfile = open(out, 'w')
 	outfile.write(teks)
 
-	#import matplotlib.pyplot as pl
-	#pl.hist(cosine_similarities, 50, facecolor='green', alpha=0.5)
-	#pl.title('Distribution of Cosine Similarities')
-	#pl.ylabel('Frequency')
-	#pl.xlabel('Cosine Similarity')
+	import matplotlib.pyplot as plt
+	import numpy as np
+	new_mat = np.vstack((model.docvecs["SENT_hoax"], model.docvecs["SENT_fakta"]))
+	from sklearn.preprocessing import StandardScaler
+	x_new = StandardScaler().fit_transform(new_mat)
+	from sklearn.decomposition import PCA
+	pca = PCA(n_components=2)
+	pca.fit(x_new)
+	new_pca = pca.transform(x_new)
+	print("original shape:   ", new_mat.shape)
+	print("transformed shape:", new_pca.shape)
 	
-	#figdv = pl.gcf()
-	#figdv.savefig(path+fig)
-	#pl.gcf().clear()
+	# Plot
+	x = new_pca[0]
+	y = new_pca[1]
+	colors = (0,0,0)
+	area = np.pi*15
+	 
+	
+	plt.scatter(x, y, s=area, c=colors, alpha=0.5)
+	plt.title('Scatter plot pythonspot.com')
+	plt.xlabel('x')
+	plt.ylabel('y')
+	
+	figdv = plt.gcf()
+	figdv.savefig(path+fig)
+	plt.gcf().clear()
 	
 	return fig, out

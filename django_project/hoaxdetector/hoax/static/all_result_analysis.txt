@@ -1,1 +1,1 @@
-Nilai Similarities antara corpus hoax dan fakta adalah sebesar: 0.2477521300315857
+Nilai Similarities antara corpus hoax dan fakta adalah sebesar: 0.10611516237258911
