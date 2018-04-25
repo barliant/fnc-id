@@ -22,35 +22,45 @@ def analyze(request):
 	corpus = request.POST['label']
 	process = request.POST['process']
 	method = request.POST['method']
-	normalize(corpus)
 	
 	cursor = connection.cursor()
-	if process == 'stop':
-		stopwords_removal(corpus)
-		if method == 'wordcloud':
-			im, tx = wordcloud(corpus)
-		elif method == 'sna':
-			im, tx = sna(corpus)
-		elif method == 'docvec':
-			im, tx = docvec(corpus)
+	
+	if method == 'wordcloud':
+		normalize(corpus)
+		if process == 'stop':
+			stopwords_removal(corpus)
+		elif process == 'stem':
+			stemming(corpus)
+		elif process == 'stopstem':
+			stop_stem(corpus)
 
-	elif process == 'stem':
-		stemming(corpus)
-		if method == 'wordcloud':
-			im, tx = wordcloud(corpus)	
-		elif method == 'sna':
-			im, tx = sna(corpus)
-		elif method == 'docvec':
-			im, tx = docvec(corpus)
-			
-	elif process == 'stopstem':
-		stop_stem(corpus)
-		if method == 'wordcloud':
-			im, tx = wordcloud(corpus)
-		elif method == 'sna':
-			im, tx = sna(corpus)
-		elif method == 'docvec':
-			im, tx = docvec(corpus)
+		im, tx = wordcloud(corpus)
+
+	elif method == 'sna':
+		normalize(corpus)
+		if process == 'stop':
+			stopwords_removal(corpus)
+		elif process == 'stem':
+			stemming(corpus)
+		elif process == 'stopstem':
+			stop_stem(corpus)
+
+		im, tx = sna(corpus)
+
+	elif method == 'docvec':
+		normalize('Fakta')
+		normalize('Hoax')
+		if process == 'stop':
+			stopwords_removal('Fakta')
+			stopwords_removal('Hoax')
+		elif process == 'stem':
+			stemming('Fakta')
+			stemming('Hoax')
+		elif process == 'stopstem':
+			stop_stem('Fakta')
+			stop_stem('Hoax')
+
+		im, tx = docvec(corpus)
 
 	cursor.execute("INSERT INTO hoax_result (label, process, method, result_img, result_txt) VALUES ('%s', '%s', '%s', '%s', '%s')" % (corpus, process, method, im, tx))
 	return redirect('/main/hasil')
@@ -330,7 +340,9 @@ def sna(label):
 
 	pos = nx.spring_layout(G)
 	nx.draw(G, pos, node_color = '#A0CBE2', font_size = 5, scale = 3, edge_color='#BB0000', width=2, edge_cmap=plt.cm.Blues, with_labels=True)
-	plt.savefig(path+fig, dpi = 1000)
+	figsna = plt.gcf()
+	figsna.savefig(path+fig, dpi = 1000)
+	plt.gcf().clear()
 
 	#degree centrality
 	deg_cen = nx.degree_centrality(G)
@@ -406,19 +418,19 @@ def docvec(label):	#code to make doc2vec analysis from label_final.txt
 	#model_loaded = models.Doc2Vec.load('/home/adhanindita/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/my_model.doc2vec')
 	model_loaded = models.Doc2Vec.load('D:/tugas-akhir/fnc-id/django_project/hoaxdetector/hoax/static/my_model.doc2vec')
 	
-	cosine_similarities = []
-	for r in range(2):
-		for t in range(r+1, 2):
-			cosine_similarities.append(model.docvecs.similarity(r,t))
-	teks = 'Nilai Cosine Similarities antara corpus hoax dan fakta adalah sebesar: '+ str(cosine_similarities)
+	similarity = model.docvecs.most_similar(["SENT_hoax"])[0][1]
+	teks = 'Nilai Similarities antara corpus hoax dan fakta adalah sebesar: '+ str(similarity)
 	outfile = open(out, 'w')
 	outfile.write(teks)
 
-	import matplotlib.pyplot as pl
-	pl.hist(cosine_similarities, 50, facecolor='green', alpha=0.5)
-	pl.title('Distribution of Cosine Similarities')
-	pl.ylabel('Frequency')
-	pl.xlabel('Cosine Similarity')
-	pl.savefig(path+fig)
+	#import matplotlib.pyplot as pl
+	#pl.hist(cosine_similarities, 50, facecolor='green', alpha=0.5)
+	#pl.title('Distribution of Cosine Similarities')
+	#pl.ylabel('Frequency')
+	#pl.xlabel('Cosine Similarity')
+	
+	#figdv = pl.gcf()
+	#figdv.savefig(path+fig)
+	#pl.gcf().clear()
 
 	return fig, out
