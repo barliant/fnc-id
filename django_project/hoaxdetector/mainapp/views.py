@@ -356,18 +356,18 @@ def sna(label):
 	clo_cen = nx.closeness_centrality(G)
 	sorted_clocen = sorted(clo_cen.items(), key=itemgetter(1), reverse=True)
 
-	teks1 = '20 Node paling sentral adalah: \n 1. Degree Centrality : \n'
+	teks1 = '5 Node paling sentral adalah: \n 1. Degree Centrality : \n'
 	outfile = open(out, 'w')
 	outfile.write(teks1 + "\n")
-	for b in sorted_degcen[:20]:
+	for b in sorted_degcen[:5]:
 		outfile.write( b[0] + ", \n")
 	teks2 = '2. Betweenness Centrality : \n'
 	outfile.write(teks2 + "\n")
-	for b in sorted_betcen[:20]:
+	for b in sorted_betcen[:5]:
 		outfile.write( b[0] + ", \n")
 	teks3 = '3. Closeness Centrality : \n'
 	outfile.write(teks3 + "\n")
-	for b in sorted_clocen[:20]:
+	for b in sorted_clocen[:5]:
 		outfile.write( b[0] + ", \n")
 
 	return fig, out
@@ -434,10 +434,13 @@ def docvec(label):	#code to make doc2vec analysis from label_final.txt
 	new_pca = pca.transform(x_new)
 	print("original shape:   ", new_mat.shape)
 	print("transformed shape:", new_pca.shape)
+	print(new_pca)
+	x = np.stack((new_pca[0][0], new_pca[1][0]))
+	y = np.stack((new_pca[0][1], new_pca[1][1]))
 	
-	# Plot
-	x = new_pca[0]
-	y = new_pca[1]
+	N = 5
+	x = x
+	y = y
 	colors = (0,0,0)
 	area = np.pi*15
 	 

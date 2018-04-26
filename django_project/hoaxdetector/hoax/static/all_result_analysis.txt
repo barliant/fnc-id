@@ -1,1 +1,2 @@
-Nilai Similarities antara corpus hoax dan fakta adalah sebesar: 0.10611516237258911
+Nilai Similarities antara corpus hoax dan fakta adalah sebesar: 0.09806724637746811
+, Nilai vektor corpus hoax adalah : [  9.99999523e+00  -4.50015068e-06], dan Nilai vektor corpus fakta adalah : [ -9.99999523e+00   4.50015068e-06]
